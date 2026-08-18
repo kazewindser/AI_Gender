@@ -1,0 +1,21 @@
+<aside class="chat-panel" aria-label="生成AI助手区域">
+    <h4>生成AI助手</h4>
+    <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
+    <div class="chat-copy-toolbar">
+        <span id="copy-status" aria-live="polite"></span>
+        <button id="copy-matrix" type="button" class="btn btn-outline-secondary btn-sm">
+            {{ CopyButtonText }}
+        </button>
+    </div>
+    <div class="chat-input-row">
+        <textarea
+            id="chat-input"
+            class="form-control"
+            rows="1"
+            placeholder="输入消息……"
+            aria-label="发送给生成AI助手的消息"
+        ></textarea>
+        <button id="chat-send" type="button" class="btn btn-primary">发送</button>
+    </div>
+    <div id="chat-status" class="chat-status" aria-live="polite"></div>
+</aside>

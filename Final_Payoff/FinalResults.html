@@ -1,0 +1,41 @@
+{{ block title }}最终结果{{ endblock }}
+
+{{ block styles }}
+    <link rel="stylesheet" href="{% static 'Styles/FinalPayoff.css' %}">
+{{ endblock }}
+
+{{ block content }}
+<div class="final-payoff-page">
+    <p class="final-payoff-introduction">
+        系统已从三个 Block 中随机抽取一个 Block 计算最终得分。
+    </p>
+
+    <div class="payoff-card-grid">
+        {{ for card in payoff_cards }}
+            <article class="payoff-card{{ if card.selected }} selected{{ endif }}">
+                {{ if card.selected }}
+                    <span class="selected-badge">已抽中</span>
+                {{ endif }}
+                <h3>{{ card.title }}</h3>
+                <p class="payoff-scheme">{{ card.scheme }}</p>
+                <dl>
+                    <div>
+                        <dt>累计得分</dt>
+                        <dd>{{ card.score|to2 }}</dd>
+                    </div>
+                    <div>
+                        <dt>排名</dt>
+                        <dd>第 {{ card.rank }} 名</dd>
+                    </div>
+                </dl>
+            </article>
+        {{ endfor }}
+    </div>
+
+    <div class="final-score-panel">
+        <span>最终得分</span>
+        <strong>{{ final_score|to2 }}</strong>
+        <span>points</span>
+    </div>
+</div>
+{{ endblock }}

@@ -1,0 +1,41 @@
+{{ block title }}
+    Block {{ player.round_number }}:
+    {{ if player.round_number == 1 }}Piece rate{{ endif }}
+    {{ if player.round_number == 2 }}Tournament{{ endif }}
+    {{ if player.round_number == 3 }}
+        {{ if player.payment_choice == 'piece_rate' }}Piece rate{{ endif }}
+        {{ if player.payment_choice == 'tournament' }}Tournament{{ endif }}
+    {{ endif }}
+{{ endblock }}
+
+{{ block styles }}
+    <link rel="stylesheet" href="{% static 'global/TaskWorkspace.css' %}?v=20260818-7">
+    <link rel="stylesheet" href="{% static 'Styles/StockForecastTask.css' %}?v=20260818-8">
+    {{ if TreatmentAI }}
+        <link rel="stylesheet" href="{% static 'Styles/AIChat.css' %}?v=20260818-14">
+    {{ endif }}
+{{ endblock }}
+
+{{ block content }}
+    <div class="task-shell">
+        <div class="task-workspace {{ if TreatmentAI }}with-ai{{ else }}without-ai{{ endif }}">
+            <div class="counting-zero-module">
+                {{ include 'global/StockForecastTask.html' }}
+            </div>
+
+            {{ if TreatmentAI }}
+                {{ include 'global/AIChat.html' }}
+            {{ endif }}
+        </div>
+    </div>
+{{ endblock }}
+
+
+
+
+{{ block scripts }}
+    <script src="{% static 'Scripts/StockForecastTask.js' %}?v=20260818-5"></script>
+    {{ if TreatmentAI }}
+        <script src="{% static 'Scripts/AIChat.js' %}?v=20260818-6"></script>
+    {{ endif }}
+{{ endblock }}

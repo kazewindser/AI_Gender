@@ -1,0 +1,50 @@
+.otree-title {
+    position: relative;
+    margin-bottom: .9rem;
+    padding-bottom: .55rem;
+    color: #263445;
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: .01em;
+    text-align: center;
+}
+
+.otree-title::after {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 58px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #78aefc, #0d6efd);
+    content: '';
+    transform: translateX(-50%);
+}
+
+.task-shell {
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.task-workspace {
+    align-items: start;
+}
+
+.task-workspace.with-ai {
+    display: grid;
+    grid-template-columns: minmax(520px, 2fr) minmax(290px, 1fr);
+    gap: .8rem;
+}
+
+.task-workspace.without-ai {
+    display: block;
+}
+
+.task-workspace.without-ai .counting-zero-module {
+    width: min(100%, 760px);
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    .task-workspace.with-ai { grid-template-columns: 1fr; }
+}

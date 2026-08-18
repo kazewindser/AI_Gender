@@ -1,0 +1,41 @@
+{{ if ShowFeedback }}
+    <div class="task-meta">
+        <span>累计得分：<strong id="cumulative-score">0.00</strong></span>
+    </div>
+{{ endif }}
+
+<section class="stock-panel" aria-label="股票价格预测任务区">
+    <div class="stock-chart-wrap">
+        <svg id="stock-chart" class="stock-chart" viewBox="0 0 640 215" role="img" aria-label="标准化股价时间序列图"></svg>
+    </div>
+
+    <div class="series-data-box" aria-label="全部标准化股价时间序列数据">
+        <div class="series-data-title">标准化股价时间序列</div>
+        <pre id="stock-series-data" class="series-data-values"></pre>
+    </div>
+
+    <p class="instructions">
+        请根据左图预测一个月（19个交易日）后该股票的标准化价格。
+    </p>
+
+    <div class="task-status-row">
+        <span class="question-status">题目：<strong id="question-number">1</strong></span>
+        <div id="task-timer-slot" class="task-timer-slot"></div>
+    </div>
+
+    <div class="answer-row">
+        <label for="forecast-answer">预测价格：</label>
+        <input
+            id="forecast-answer"
+            class="form-control"
+            type="number"
+            min="0.01"
+            step="0.01"
+            inputmode="decimal"
+            autocomplete="off"
+        >
+        <button id="submit-answer" type="button" class="btn btn-primary">提交</button>
+    </div>
+
+    <div id="feedback" aria-live="polite"></div>
+</section>

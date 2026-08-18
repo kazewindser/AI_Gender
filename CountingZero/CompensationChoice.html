@@ -1,0 +1,81 @@
+{{ block title }}
+    {{ if player.round_number == 1 }}Block 1：Piece rate{{ endif }}
+    {{ if player.round_number == 2 }}Block 2：Tournament{{ endif }}
+    {{ if player.round_number == 3 }}Block 3：选择报酬方式{{ endif }}
+{{ endblock }}
+
+{{ block styles }}
+    <link rel="stylesheet" href="{% static 'Styles/CompensationChoice.css' %}">
+{{ endblock }}
+
+{{ block content }}
+<div class="choice-page">
+    {{ if player.round_number == 1 }}
+        <p class="choice-introduction">
+            Block 1 采用 Piece rate。请阅读以下规则，然后进入五分钟任务。
+        </p>
+
+        <div class="rule-card">
+            <span class="choice-card-title">Piece rate</span>
+            <span class="choice-card-description">
+                当前 Block 的报酬只取决于你自己的任务得分，不与同组其他参与者比较。
+                如果当前 Block 被随机抽中，你的当前 Block 累计得分就是最终得分。
+            </span>
+        </div>
+
+        <div class="choice-actions">
+            <button class="btn btn-primary" type="submit">我已了解，继续</button>
+        </div>
+    {{ endif }}
+
+    {{ if player.round_number == 2 }}
+        <p class="choice-introduction">
+            Block 2 采用 Tournament。请阅读以下规则，然后进入五分钟任务。
+        </p>
+
+        <div class="rule-card">
+            <span class="choice-card-title">Tournament</span>
+            <span class="choice-card-description">
+                当前 Block 得分将与同组三名其他参与者的当前 Block 得分比较。
+                如果当前 Block 被随机抽中，排名第一者的当前 Block 累计得分乘以 4，
+                其余参与者最终得分为 0。并列时将随机决定排名。
+            </span>
+        </div>
+
+        <div class="choice-actions">
+            <button class="btn btn-primary" type="submit">我已了解，继续</button>
+        </div>
+    {{ endif }}
+
+    {{ if player.round_number == 3 }}
+        <p class="choice-introduction">
+            请选择 Block 3 任务采用的报酬方式。选择完成后，所有参与者将统一进入五分钟任务。
+        </p>
+
+        <div class="choice-card-grid" role="radiogroup" aria-label="Block 3 报酬方式">
+            {{ for card in choice_cards }}
+                <label class="choice-card" data-choice-card>
+                    <input
+                        class="choice-radio"
+                        type="radio"
+                        name="payment_choice"
+                        value="{{ card.value }}"
+                        required
+                    >
+                    <span class="choice-card-indicator" aria-hidden="true"></span>
+                    <span class="choice-card-title">{{ card.title }}</span>
+                    <span class="choice-card-description">{{ card.description }}</span>
+                </label>
+            {{ endfor }}
+        </div>
+
+        <div class="choice-actions">
+            <button class="btn btn-primary" type="submit">确认选择并继续</button>
+        </div>
+    {{ endif }}
+</div>
+{{ endblock }}
+
+{{ block scripts }}
+    <script src="{% static 'Scripts/CompensationChoice.js' %}"></script>
+{{ endblock }}
