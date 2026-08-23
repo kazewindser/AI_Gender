@@ -41,6 +41,15 @@
     font: 12px sans-serif;
     text-anchor: end;
 }
+.chart-x-label {
+    fill: #6c757d;
+    font: 11px sans-serif;
+    text-anchor: middle;
+}
+.chart-x-axis-title {
+    font-weight: 600;
+    text-anchor: start;
+}
 
 .chart-hover-point,
 .chart-tooltip {

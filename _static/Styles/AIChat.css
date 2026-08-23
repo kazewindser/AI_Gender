@@ -1,7 +1,9 @@
 .chat-panel {
+    box-sizing: border-box;
     height: 100%;
     min-height: 0;
     max-height: none;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     border: 1px solid #d8dde3;
@@ -100,10 +102,19 @@
 }
 
 #chat-input {
-    height: 38px;
-    min-height: 38px;
+    flex: 1 1 auto;
+    width: 0;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    block-size: 38px !important;
+    min-block-size: 38px !important;
+    max-block-size: 38px !important;
     padding-top: .375rem;
     padding-bottom: .375rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    field-sizing: fixed;
     resize: none;
 }
 

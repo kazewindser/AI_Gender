@@ -2,8 +2,8 @@
 
 {{ block styles }}
     <link rel="stylesheet" href="{% static 'global/TaskWorkspace.css' %}?v=20260823-8">
-    <link rel="stylesheet" href="{% static 'Styles/StockForecastTask.css' %}?v=20260823-10">
-    {{ if TreatmentAI }}<link rel="stylesheet" href="{% static 'Styles/AIChat.css' %}?v=20260823-15">{{ endif }}
+    <link rel="stylesheet" href="{% static 'Styles/StockForecastTask.css' %}?v=20260823-11">
+    {{ if TreatmentAI }}<link rel="stylesheet" href="{% static 'Styles/AIChat.css' %}?v=20260823-17">{{ endif }}
 {{ endblock }}
 
 {{ block content }}
@@ -16,6 +16,6 @@
 {{ endblock }}
 
 {{ block scripts }}
-    <script src="{% static 'Scripts/StockForecastTask.js' %}?v=20260818-5"></script>
-    {{ if TreatmentAI }}<script src="{% static 'Scripts/AIChat.js' %}?v=20260818-6"></script>{{ endif }}
+    <script src="{% static 'Scripts/StockForecastTask.js' %}?v=20260823-7"></script>
+    {{ if TreatmentAI }}<script src="{% static 'Scripts/AIChat.js' %}?v=20260823-8"></script>{{ endif }}
 {{ endblock }}

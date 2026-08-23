@@ -3,10 +3,31 @@
     const inputElement = document.getElementById('chat-input');
     const sendButton = document.getElementById('chat-send');
     const statusElement = document.getElementById('chat-status');
+    const chatPanelElement = inputElement?.closest('.chat-panel');
+    const workspaceElement = chatPanelElement?.closest('.task-workspace');
+    const taskElement = workspaceElement?.querySelector('.counting-zero-module');
     let isComposing = false;
     let awaitingResponse = false;
 
     if (!messagesElement || !inputElement || !sendButton) return;
+
+    function syncChatPanelHeight() {
+        if (!chatPanelElement || !taskElement) return;
+        if (window.matchMedia('(max-width: 900px)').matches) {
+            chatPanelElement.style.removeProperty('height');
+            chatPanelElement.style.removeProperty('max-height');
+            return;
+        }
+        const taskHeight = Math.round(taskElement.getBoundingClientRect().height);
+        chatPanelElement.style.setProperty('height', `${taskHeight}px`);
+        chatPanelElement.style.setProperty('max-height', `${taskHeight}px`);
+    }
+
+    syncChatPanelHeight();
+    window.addEventListener('resize', syncChatPanelHeight);
+    if ('ResizeObserver' in window && taskElement) {
+        new ResizeObserver(syncChatPanelHeight).observe(taskElement);
+    }
 
     function appendMessage(sender, text) {
         const message = document.createElement('div');

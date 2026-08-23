@@ -33,7 +33,7 @@
         chartElement.replaceChildren();
         const width = 640;
         const height = 215;
-        const margin = {top: 18, right: 18, bottom: 22, left: 58};
+        const margin = {top: 18, right: 18, bottom: 30, left: 58};
         const plotWidth = width - margin.left - margin.right;
         const plotHeight = height - margin.top - margin.bottom;
         const values = series.map(Number);
@@ -68,6 +68,26 @@
             x2: width - margin.right, y2: height - margin.bottom,
             class: 'chart-axis-line',
         }));
+        const dayAxisLabel = svgElement('text', {
+            x: 12, y: height - 8, class: 'chart-x-label chart-x-axis-title',
+        });
+        dayAxisLabel.textContent = 'Day';
+        chartElement.appendChild(dayAxisLabel);
+        [1, 50, 100, 150, 200, 252]
+            .filter(day => day <= values.length)
+            .forEach(day => {
+                const tickX = x(day - 1);
+                chartElement.appendChild(svgElement('line', {
+                    x1: tickX, y1: height - margin.bottom,
+                    x2: tickX, y2: height - margin.bottom + 4,
+                    class: 'chart-axis-line',
+                }));
+                const label = svgElement('text', {
+                    x: tickX, y: height - 8, class: 'chart-x-label',
+                });
+                label.textContent = day;
+                chartElement.appendChild(label);
+            });
         const points = values.map((value, index) => `${x(index)},${y(value)}`).join(' ');
         chartElement.appendChild(svgElement('polyline', {
             points, class: 'chart-price-line',
@@ -79,7 +99,7 @@
         });
         const tooltip = svgElement('g', {class: 'chart-tooltip'});
         const tooltipBox = svgElement('rect', {
-            x: 0, y: -27, width: 62, height: 25, rx: 5,
+            x: 0, y: -27, width: 112, height: 25, rx: 5,
         });
         const tooltipText = svgElement('text', {x: 8, y: -10});
         tooltip.append(tooltipBox, tooltipText);
@@ -118,7 +138,7 @@
         const pointY = chartGeometry.y(value);
         const tooltipX = Math.min(
             pointX + 9,
-            chartGeometry.width - chartGeometry.margin.right - 62
+            chartGeometry.width - chartGeometry.margin.right - 112
         );
 
         chartGeometry.hoverPoint.setAttribute('cx', pointX);
@@ -127,7 +147,7 @@
             'transform',
             `translate(${tooltipX},${Math.max(pointY, 38)})`
         );
-        chartGeometry.tooltipText.textContent = value.toFixed(2);
+        chartGeometry.tooltipText.textContent = `Day ${index + 1}: ${value.toFixed(2)}`;
         chartElement.classList.add('show-chart-hover');
     }
 
