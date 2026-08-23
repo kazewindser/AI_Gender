@@ -30,7 +30,7 @@ class C(BaseConstants):
     AI_REASONING_EFFORT = 'none'
     AI_TEMPERATURE = 1
     AI_SYSTEM_PROMPT = (
-        'The user is completing a task. Please assist the user. '
+        'The user is completing a task. Assist the user based only on the information they provide. '
         'Always respond in Japanese.'
     )
 
