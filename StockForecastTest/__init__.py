@@ -29,10 +29,7 @@ class C(BaseConstants):
     AI_MODEL = 'gpt-5.6-luna'
     AI_REASONING_EFFORT = 'none'
     AI_TEMPERATURE = 1
-    AI_SYSTEM_PROMPT = (
-        'The user is completing a task. Assist the user based only on the information they provide. '
-        'Always respond in Japanese.'
-    )
+    AI_SYSTEM_PROMPT = 'Always respond in Japanese.'
 
 
 class Subsession(BaseSubsession):
