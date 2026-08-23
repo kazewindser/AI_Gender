@@ -24,8 +24,7 @@ class C(BaseConstants):
     AI_REASONING_EFFORT = 'none'
     AI_TEMPERATURE = 1
     AI_SYSTEM_PROMPT = (
-        'The user is completing a counting-zero task. The user will send you a matrix containing zeros and ones. '
-        'Please help the user count the number of zeros in the matrix and provide a clear answer. '
+        'The user is completing a task. Please assist the user. '
         'Always respond in Japanese.'
     )
 

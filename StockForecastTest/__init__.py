@@ -30,8 +30,7 @@ class C(BaseConstants):
     AI_REASONING_EFFORT = 'none'
     AI_TEMPERATURE = 1
     AI_SYSTEM_PROMPT = (
-        'The user is completing a stock-forecasting task. The user will send you a chronological series of normalized stock prices. '
-        'Please help the user predict the normalized price 30 trading days later and provide a clear forecast. '
+        'The user is completing a task. Please assist the user. '
         'Always respond in Japanese.'
     )
 
