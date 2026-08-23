@@ -6,7 +6,7 @@
 }
 
 .stock-panel {
-    padding: .55rem .55rem .4rem;
+    padding: .4rem .35rem .35rem;
     border: 1px solid #d8dde3;
     border-radius: 8px;
     background: #fff;
@@ -75,7 +75,7 @@
 }
 
 .series-data-title {
-    padding: .28rem .55rem;
+    padding: .25rem .4rem;
     border-bottom: 1px solid #e1e5e9;
     color: #536170;
     background: #eef1f4;
@@ -85,7 +85,7 @@
 
 .series-data-values {
     margin: 0;
-    padding: .45rem .55rem;
+    padding: .35rem .4rem;
     overflow: visible;
     color: #263445;
     background: transparent;
