@@ -1,0 +1,21 @@
+{{ block title }}数零任务{{ endblock }}
+
+{{ block styles }}
+    <link rel="stylesheet" href="{% static 'global/TaskWorkspace.css' %}?v=20260818-7">
+    <link rel="stylesheet" href="{% static 'Styles/CountingZeroTask.css' %}?v=20260818-11">
+    {{ if TreatmentAI }}<link rel="stylesheet" href="{% static 'Styles/AIChat.css' %}?v=20260818-14">{{ endif }}
+{{ endblock }}
+
+{{ block content }}
+<div class="task-shell">
+    <div class="task-workspace {{ if TreatmentAI }}with-ai{{ else }}without-ai{{ endif }}">
+        <div class="counting-zero-module">{{ include 'global/CountingZeroTask.html' }}</div>
+        {{ if TreatmentAI }}{{ include 'global/AIChat.html' }}{{ endif }}
+    </div>
+</div>
+{{ endblock }}
+
+{{ block scripts }}
+    <script src="{% static 'Scripts/CountingZeroTask.js' %}?v=20260818-9"></script>
+    {{ if TreatmentAI }}<script src="{% static 'Scripts/AIChat.js' %}?v=20260818-6"></script>{{ endif }}
+{{ endblock }}

@@ -13,6 +13,18 @@ SESSION_CONFIGS = [
         app_sequence=['StockForecast', 'Final_Payoff'],
         num_demo_participants=4,
     ),
+    dict(
+        name='counting_zero_test',
+        display_name='Counting Zero Test (5 minutes)',
+        app_sequence=['CountingZeroTest'],
+        num_demo_participants=1,
+    ),
+    dict(
+        name='stock_forecast_test',
+        display_name='Stock Forecast Test (5 minutes)',
+        app_sequence=['StockForecastTest'],
+        num_demo_participants=1,
+    ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
@@ -48,7 +60,7 @@ PARTICIPANT_FIELDS = [
 SESSION_FIELDS = []
 
 
-TreatmentAI = False
+TreatmentAI = True
 ShowFeedback = False
 
 # rooms

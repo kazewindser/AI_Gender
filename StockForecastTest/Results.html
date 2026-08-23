@@ -1,0 +1,9 @@
+{{ block title }}测试完成{{ endblock }}
+
+{{ block content }}
+<div class="alert alert-success">
+    5分钟股价预测任务已经结束。你共完成 <strong>{{ player.total_questions }}</strong> 道题，累计得分为
+    <strong>{{ player.cumulative_score|to2 }}</strong> 分。
+</div>
+{{ next_button }}
+{{ endblock }}

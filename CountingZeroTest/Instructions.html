@@ -1,0 +1,56 @@
+{{ block title }}数零任务说明{{ endblock }}
+
+{{ block styles }}
+<link rel="stylesheet" href="{% static 'Styles/TestInstructions.css' %}?v=20260823-1">
+{{ endblock }}
+
+{{ block content }}
+<div class="test-instructions">
+    <section class="instruction-hero">
+        <h2>数零任务</h2>
+        <p>每道题会显示一个15×15的0/1矩阵。你的任务是判断矩阵中0的数量。</p>
+        <div class="instruction-facts">
+            <div class="instruction-fact"><strong>5分钟</strong><span>固定作答时间</span></div>
+            <div class="instruction-fact"><strong>题数不限</strong><span>完成后自动进入下一题</span></div>
+            <div class="instruction-fact"><strong>0–10 points</strong><span>每道题的得分范围</span></div>
+        </div>
+    </section>
+
+    <section class="instruction-section">
+        <h3>作答目标</h3>
+        <div class="instruction-emphasis">
+            请在规定时间内<strong>尽可能多、而且尽可能准确地</strong>完成题目。最终得分是5分钟内所有题目得分之和。
+        </div>
+    </section>
+
+    <section class="instruction-section">
+        <h3>计分规则</h3>
+        <p>每道题最低为0 points，最高为10 points。首先计算相对误差率：</p>
+        <div class="formula-card">
+            <div class="formula-label">相对误差率</div>
+            <math display="block" aria-label="相对误差率等于提交答案减正确答案的绝对值除以正确答案">
+                <mrow><mtext>相对误差率</mtext><mo>=</mo><mfrac><mrow><mo>|</mo><mtext>提交答案</mtext><mo>−</mo><mtext>正确答案</mtext><mo>|</mo></mrow><mtext>正确答案</mtext></mfrac></mrow>
+            </math>
+        </div>
+        <p>该题得分按照以下公式计算：</p>
+        <div class="formula-card">
+            <div class="formula-label">单题得分</div>
+            <math display="block" aria-label="得分等于零与十乘以一减相对误差率除以百分之二十两者中的较大值">
+                <mrow><mtext>得分</mtext><mo>=</mo><mi>max</mi><mo>[</mo><mn>0</mn><mo>,</mo><mn>10</mn><mo>×</mo><mo>(</mo><mn>1</mn><mo>−</mo><mfrac><mtext>相对误差率</mtext><mtext>20%</mtext></mfrac><mo>)</mo><mo>]</mo></mrow>
+            </math>
+        </div>
+        <p class="score-warning"><strong>注意：</strong>完全正确得10 points；相对误差率达到或超过20%时，该题得0 points。</p>
+    </section>
+
+    {{ if TreatmentAI }}
+    <section class="instruction-section ai-instruction">
+        <h3>ChatGPT 辅助</h3>
+        <p><strong>你可以使用任务界面的 ChatGPT 帮助你。</strong></p>
+        <p>ChatGPT 使用的程序提示词如下：</p>
+        <pre class="prompt-box">{{ system_prompt }}</pre>
+    </section>
+    {{ endif }}
+
+    <div class="instruction-actions">{{ next_button }}</div>
+</div>
+{{ endblock }}

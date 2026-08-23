@@ -1,0 +1,153 @@
+.test-instructions {
+    max-width: 880px;
+    margin: 0 auto;
+    color: #1f2937;
+}
+
+.instruction-hero {
+    padding: 28px;
+    border: 1px solid #dbe4ee;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f8fbff 0%, #eef6ff 100%);
+    box-shadow: 0 10px 28px rgba(37, 71, 106, 0.08);
+}
+
+.instruction-hero h2 {
+    margin: 0 0 8px;
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.instruction-hero p {
+    margin: 0;
+    color: #4b5563;
+    line-height: 1.7;
+}
+
+.instruction-facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.instruction-fact {
+    padding: 15px 12px;
+    border: 1px solid rgba(75, 125, 173, 0.18);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.88);
+    text-align: center;
+}
+
+.instruction-fact strong,
+.instruction-fact span {
+    display: block;
+}
+
+.instruction-fact strong {
+    color: #174f7c;
+    font-size: 1.2rem;
+}
+
+.instruction-fact span {
+    margin-top: 3px;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.instruction-section {
+    margin-top: 18px;
+    padding: 24px 26px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+}
+
+.instruction-section h3 {
+    margin: 0 0 14px;
+    font-size: 1.12rem;
+    font-weight: 700;
+}
+
+.instruction-section p {
+    margin-bottom: 12px;
+    line-height: 1.75;
+}
+
+.instruction-emphasis {
+    padding: 13px 16px;
+    border-left: 4px solid #2563eb;
+    border-radius: 8px;
+    background: #eff6ff;
+    line-height: 1.65;
+}
+
+.formula-card {
+    margin: 12px 0 18px;
+    padding: 18px;
+    overflow-x: auto;
+    border: 1px solid #d9e2ec;
+    border-radius: 12px;
+    background: #f8fafc;
+    text-align: center;
+}
+
+.formula-label {
+    margin-bottom: 8px;
+    color: #64748b;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.formula-card math {
+    margin: 0 auto;
+    font-size: 1.08rem;
+}
+
+.score-warning {
+    margin: 0;
+    padding: 13px 16px;
+    border: 1px solid #fed7aa;
+    border-radius: 10px;
+    background: #fff7ed;
+    color: #9a3412;
+}
+
+.ai-instruction {
+    border-color: #c7e6dc;
+    background: #f3fbf8;
+}
+
+.ai-instruction h3 {
+    color: #12644f;
+}
+
+.prompt-box {
+    margin: 12px 0 0;
+    padding: 15px;
+    overflow-x: auto;
+    border: 1px solid #bcd9d0;
+    border-radius: 10px;
+    background: #fff;
+    color: #334155;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    white-space: pre-wrap;
+}
+
+.instruction-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+@media (max-width: 640px) {
+    .instruction-hero,
+    .instruction-section {
+        padding: 20px;
+    }
+
+    .instruction-facts {
+        grid-template-columns: 1fr;
+    }
+}

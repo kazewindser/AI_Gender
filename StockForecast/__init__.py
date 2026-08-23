@@ -24,15 +24,18 @@ class C(BaseConstants):
     TASK_SECONDS = 5 * 60
     MAX_SCORE_PER_FORECAST = 10
     ZERO_SCORE_ERROR_THRESHOLD = 0.20
-    HISTORY_END_DATE = '2025-12-30'
+    HISTORY_TRADING_DAYS = 252
+    FORECAST_TRADING_DAYS = 30
     DATA_DIR = Path(__file__).resolve().parent.parent / '_static' / 'StockTS' / 'TSdata'
-    AI_MODEL = 'gpt-4o'
+    AI_MODEL = 'gpt-5.6-luna'
+    AI_REASONING_EFFORT = 'none'
     AI_TEMPERATURE = 1
     AI_SYSTEM_PROMPT = (
         'The user is completing a stock-forecasting task. The user will send you a chronological series of normalized stock prices. '
-        'Please help the user predict the normalized price 19 trading days later and provide a clear forecast. '
+        'Please help the user predict the normalized price 30 trading days later and provide a clear forecast. '
         'Always respond in Japanese.'
     )
+
 
 
 class Subsession(BaseSubsession):
@@ -156,14 +159,22 @@ def load_stock(code):
     path = C.DATA_DIR / f'{code}.csv'
     with path.open(encoding='utf-8', newline='') as stock_file:
         rows = list(csv.DictReader(stock_file))
+    if rows and 'Segment' in rows[0]:
+        history_rows = [row for row in rows if row['Segment'] == 'history']
+        forecast_rows = [row for row in rows if row['Segment'] == 'forecast']
+    else:
+        # Backward-compatible fallback for an old CSV without Segment.
+        history_rows = rows[:-C.FORECAST_TRADING_DAYS]
+        forecast_rows = rows[-C.FORECAST_TRADING_DAYS:]
     history = [
-        round(float(row['NormalizedClose']), 2)
-        for row in rows
-        if row['Date'] <= C.HISTORY_END_DATE
+        round(float(row['NormalizedClose']), 2) for row in history_rows
     ]
-    if not history or not rows:
+    if (
+        len(history) != C.HISTORY_TRADING_DAYS
+        or len(forecast_rows) != C.FORECAST_TRADING_DAYS
+    ):
         raise ValueError(f'No usable stock data for {code}.')
-    target = round(float(rows[-1]['NormalizedClose']), 2)
+    target = round(float(forecast_rows[-1]['NormalizedClose']), 2)
     return history, target
 
 
@@ -375,7 +386,10 @@ def live_ai_chat(player: Player, data):
     append_chat_log(player, 'Participant', text)
     try:
         completion = get_openai_client().chat.completions.create(
-            model=C.AI_MODEL, messages=messages, temperature=C.AI_TEMPERATURE
+            model=C.AI_MODEL,
+            messages=messages,
+            reasoning_effort=C.AI_REASONING_EFFORT,
+            temperature=C.AI_TEMPERATURE,
         )
         output = completion.choices[0].message.content or ''
     except Exception as error:

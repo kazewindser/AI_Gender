@@ -23,7 +23,8 @@ class C(BaseConstants):
     TASK_SECONDS = 5 * 60
     MAX_SCORE_PER_MATRIX = 10
     ZERO_SCORE_ERROR_THRESHOLD = 0.20
-    AI_MODEL = 'gpt-4o'
+    AI_MODEL = 'gpt-5.6-luna'
+    AI_REASONING_EFFORT = 'none'
     AI_TEMPERATURE = 1
     AI_SYSTEM_PROMPT = (
         'The user is completing a counting-zero task. The user will send you a matrix containing zeros and ones. '
@@ -397,6 +398,7 @@ def live_ai_chat(player: Player, data):
         completion = get_openai_client().chat.completions.create(
             model=C.AI_MODEL,
             messages=messages,
+            reasoning_effort=C.AI_REASONING_EFFORT,
             temperature=C.AI_TEMPERATURE,
         )
         output = completion.choices[0].message.content or ''
