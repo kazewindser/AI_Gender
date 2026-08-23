@@ -67,9 +67,8 @@
 
 .series-data-box {
     width: min(100%, 640px);
-    height: 270px;
     margin: 0 auto .5rem;
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid #d8dde3;
     border-radius: 6px;
     background: #f7f8fa;
@@ -85,10 +84,9 @@
 }
 
 .series-data-values {
-    height: calc(100% - 29px);
     margin: 0;
     padding: .45rem .55rem;
-    overflow: auto;
+    overflow: visible;
     color: #263445;
     background: transparent;
     font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
