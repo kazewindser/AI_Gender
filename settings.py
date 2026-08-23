@@ -60,7 +60,7 @@ PARTICIPANT_FIELDS = [
 SESSION_FIELDS = []
 
 
-TreatmentAI = True
+TreatmentAI = False
 ShowFeedback = False
 
 # rooms
