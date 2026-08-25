@@ -14,16 +14,32 @@ SESSION_CONFIGS = [
         num_demo_participants=4,
     ),
     dict(
-        name='counting_zero_test',
-        display_name='Counting Zero Test (5 minutes)',
+        name='counting_zero_test_ai',
+        display_name='Counting Zero Test - AI (5 minutes)',
         app_sequence=['CountingZeroTest'],
         num_demo_participants=1,
+        treatment_ai=True,
     ),
     dict(
-        name='stock_forecast_test',
-        display_name='Stock Forecast Test (5 minutes)',
+        name='counting_zero_test_no_ai',
+        display_name='Counting Zero Test - No AI (5 minutes)',
+        app_sequence=['CountingZeroTest'],
+        num_demo_participants=1,
+        treatment_ai=False,
+    ),
+    dict(
+        name='stock_forecast_test_ai',
+        display_name='Stock Forecast Test - AI (5 minutes)',
         app_sequence=['StockForecastTest'],
         num_demo_participants=1,
+        treatment_ai=True,
+    ),
+    dict(
+        name='stock_forecast_test_no_ai',
+        display_name='Stock Forecast Test - No AI (5 minutes)',
+        app_sequence=['StockForecastTest'],
+        num_demo_participants=1,
+        treatment_ai=False,
     ),
 ]
 

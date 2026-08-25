@@ -9,7 +9,7 @@ import random
 import time
 
 from openai import OpenAI
-from settings import ShowFeedback, TreatmentAI
+from settings import ShowFeedback
 from _static.StockTS.StockBank import StockBank
 
 
@@ -119,6 +119,10 @@ def get_openai_client():
     return OpenAI(api_key=api_key)
 
 
+def treatment_ai(player):
+    return player.session.config['treatment_ai']
+
+
 def load_ai_messages(player):
     raw = player.field_maybe_none('ai_messages')
     return json.loads(raw) if raw else [{'role': 'system', 'content': C.AI_SYSTEM_PROMPT}]
@@ -151,7 +155,7 @@ def state_payload(player, feedback=None):
 
 
 def live_ai_chat(player, data):
-    if not TreatmentAI:
+    if not treatment_ai(player):
         return {player.id_in_group: dict(type='chat_error', text='当前条件不提供 AI。')}
     text = str(data.get('text', '')).strip()
     if not text:
@@ -234,7 +238,7 @@ def live_task(player, data):
 class Instructions(Page):
     @staticmethod
     def vars_for_template(player):
-        return dict(TreatmentAI=TreatmentAI, system_prompt=C.AI_SYSTEM_PROMPT)
+        return dict(TreatmentAI=treatment_ai(player), system_prompt=C.AI_SYSTEM_PROMPT)
 
 
 class MyPage(Page):
@@ -249,8 +253,9 @@ class MyPage(Page):
     @staticmethod
     def vars_for_template(player):
         ensure_task_state(player)
+        has_ai = treatment_ai(player)
         return dict(
-            TreatmentAI=TreatmentAI,
+            TreatmentAI=has_ai,
             ShowFeedback=ShowFeedback,
             CopyButtonText='一键复制左边所有股价时间序列',
         )
@@ -258,12 +263,13 @@ class MyPage(Page):
     @staticmethod
     def js_vars(player):
         ensure_task_state(player)
+        has_ai = treatment_ai(player)
         return dict(
             initial_series=json.loads(player.current_series),
             initial_question_number=player.question_number,
             show_feedback=ShowFeedback,
             initial_cumulative_score=round(player.cumulative_score, 2) if ShowFeedback else None,
-            initial_chat_log=load_chat_log(player) if TreatmentAI else [],
+            initial_chat_log=load_chat_log(player) if has_ai else [],
         )
 
 
