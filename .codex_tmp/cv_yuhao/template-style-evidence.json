@@ -1,0 +1,69 @@
+{
+  "input": "/Users/minifu/Project/AI_Gender/.codex_tmp/cv_yuhao/template.docx",
+  "fonts_by_char_count": {
+    "Century": 3130
+  },
+  "direct_run_formatting_runs": 90,
+  "direct_paragraph_formatting_paragraphs": 24,
+  "heading_like_paragraphs_not_heading_style": [],
+  "examples": {
+    "direct_run_formatting": [
+      {
+        "para_index": 1,
+        "run_text": "Nobuyuki Hanaki",
+        "style": "Heading"
+      },
+      {
+        "para_index": 2,
+        "run_text": "Professor, Director",
+        "style": "Normal"
+      },
+      {
+        "para_index": 3,
+        "run_text": "Institute of Social and Economic Research",
+        "style": "Normal"
+      },
+      {
+        "para_index": 4,
+        "run_text": "The University of Osaka",
+        "style": "Normal"
+      },
+      {
+        "para_index": 6,
+        "run_text": "Professional Position",
+        "style": "Heading 5"
+      }
+    ],
+    "direct_paragraph_formatting": [
+      {
+        "para_index": 6,
+        "text": "Professional Position",
+        "style": "Heading 5"
+      },
+      {
+        "para_index": 8,
+        "text": "Professor: Institute of Social and Economic Research, University of Osaka",
+        "style": "Normal"
+      },
+      {
+        "para_index": 9,
+        "text": "April 2025-current: Director, the Institute of Social and Economic Research",
+        "style": "Normal"
+      },
+      {
+        "para_index": 10,
+        "text": "April 2020-March 2025: Director,  Research Center for Behavioral Economics",
+        "style": "Normal"
+      },
+      {
+        "para_index": 14,
+        "text": "Professor: GREQAM (UMR 7316) and Aix-Marseille University",
+        "style": "Normal"
+      }
+    ]
+  },
+  "notes": [
+    "Direct formatting is not always wrong, but it often causes inconsistent output when templates change.",
+    "Heading-like paragraphs not using Heading styles can break TOC and accessibility."
+  ]
+}

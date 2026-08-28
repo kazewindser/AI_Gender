@@ -20,6 +20,8 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = 4
     NUM_ROUNDS = 3
     MATRIX_SIZE = 15
+    MIN_ZERO_COUNT = 0
+    MAX_ZERO_COUNT = MATRIX_SIZE * MATRIX_SIZE
     TASK_SECONDS = 5 * 60
     MAX_SCORE_PER_MATRIX = 10
     ZERO_SCORE_ERROR_THRESHOLD = 0.20
@@ -154,11 +156,14 @@ def creating_session(subsession: Subsession):
 
 
 def make_matrix():
+    total_cells = C.MATRIX_SIZE * C.MATRIX_SIZE
+    correct_count = random.randint(C.MIN_ZERO_COUNT, C.MAX_ZERO_COUNT)
+    cells = [0] * correct_count + [1] * (total_cells - correct_count)
+    random.shuffle(cells)
     matrix = [
-        [random.randint(0, 1) for _ in range(C.MATRIX_SIZE)]
-        for _ in range(C.MATRIX_SIZE)
+        cells[index:index + C.MATRIX_SIZE]
+        for index in range(0, total_cells, C.MATRIX_SIZE)
     ]
-    correct_count = sum(cell == 0 for row in matrix for cell in row)
     return matrix, correct_count
 
 

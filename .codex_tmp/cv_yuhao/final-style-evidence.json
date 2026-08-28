@@ -1,0 +1,69 @@
+{
+  "input": "/Users/minifu/Project/AI_Gender/Yuhao_Fu_CV.docx",
+  "fonts_by_char_count": {
+    "Century": 445
+  },
+  "direct_run_formatting_runs": 15,
+  "direct_paragraph_formatting_paragraphs": 14,
+  "heading_like_paragraphs_not_heading_style": [],
+  "examples": {
+    "direct_paragraph_formatting": [
+      {
+        "para_index": 1,
+        "text": "Yuhao Fu",
+        "style": "Heading"
+      },
+      {
+        "para_index": 2,
+        "text": "PhD Student",
+        "style": "Normal"
+      },
+      {
+        "para_index": 3,
+        "text": "Graduate School of Economics",
+        "style": "Normal"
+      },
+      {
+        "para_index": 4,
+        "text": "The University of Osaka",
+        "style": "Normal"
+      },
+      {
+        "para_index": 5,
+        "text": "",
+        "style": "Normal"
+      }
+    ],
+    "direct_run_formatting": [
+      {
+        "para_index": 1,
+        "run_text": "Yuhao Fu",
+        "style": "Heading"
+      },
+      {
+        "para_index": 2,
+        "run_text": "PhD Student",
+        "style": "Normal"
+      },
+      {
+        "para_index": 3,
+        "run_text": "Graduate School of Economics",
+        "style": "Normal"
+      },
+      {
+        "para_index": 4,
+        "run_text": "The University of Osaka",
+        "style": "Normal"
+      },
+      {
+        "para_index": 6,
+        "run_text": "Current Position",
+        "style": "Heading 5"
+      }
+    ]
+  },
+  "notes": [
+    "Direct formatting is not always wrong, but it often causes inconsistent output when templates change.",
+    "Heading-like paragraphs not using Heading styles can break TOC and accessibility."
+  ]
+}
