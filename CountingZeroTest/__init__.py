@@ -177,7 +177,10 @@ def live_task(player, data):
         return {player.id_in_group: dict(error='请输入有效的整数。')}
     correct_count = player.current_correct_count
     absolute_error = abs(submitted_count - correct_count)
-    relative_error = absolute_error / correct_count if correct_count else 0
+    if correct_count == 0:
+        relative_error = 0.0 if submitted_count == 0 else float('inf')
+    else:
+        relative_error = absolute_error / correct_count
     accuracy = max(0, 1 - relative_error)
     score = round(max(0, C.MAX_SCORE_PER_MATRIX * (1 - relative_error / C.ZERO_SCORE_ERROR_THRESHOLD)), 2)
     response_seconds = max(0, time.time() - player.current_question_started_at)
