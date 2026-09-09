@@ -7,6 +7,7 @@ import re
 import time
 from openai import OpenAI
 from settings import ShowFeedback, TreatmentAI
+from _i18n import TEXT, template_context, tr
 
 
 doc = """
@@ -22,13 +23,13 @@ class C(BaseConstants):
     MATRIX_SIZE = 15
     MIN_ZERO_COUNT = 0
     MAX_ZERO_COUNT = MATRIX_SIZE * MATRIX_SIZE
-    TASK_SECONDS = 5 * 60
+    TASK_SECONDS = 4 * 60
     MAX_SCORE_PER_MATRIX = 10
     ZERO_SCORE_ERROR_THRESHOLD = 0.20
     AI_MODEL = 'gpt-5.6-luna'
     AI_REASONING_EFFORT = 'none'
     AI_TEMPERATURE = 1
-    AI_SYSTEM_PROMPT = 'Always respond in Japanese.'
+    AI_SYSTEM_PROMPT = tr('ai_system_prompt')
 
 
 class Subsession(BaseSubsession):
@@ -380,14 +381,14 @@ def live_ai_chat(player: Player, data):
     if not TreatmentAI:
         return {
             player.id_in_group: dict(
-                type='chat_error', text='当前实验条件不提供 AI Chat。'
+                type='chat_error', text=tr('ai_unavailable')
             )
         }
 
     text = str(data.get('text', '')).strip()
     if not text:
         return {
-            player.id_in_group: dict(type='chat_error', text='请输入消息。')
+            player.id_in_group: dict(type='chat_error', text=tr('enter_message'))
         }
 
     messages = load_ai_messages(player)
@@ -408,7 +409,7 @@ def live_ai_chat(player: Player, data):
         return {
             player.id_in_group: dict(
                 type='chat_error',
-                text='AI 暂时无法回复，请稍后再试。',
+                text=tr('ai_failed'),
             )
         }
 
@@ -440,12 +441,12 @@ def live_task(player: Player, data):
     try:
         submitted_count = int(data.get('answer'))
     except (TypeError, ValueError):
-        return {player.id_in_group: dict(error='请输入一个整数。')}
+        return {player.id_in_group: dict(error=tr('enter_integer'))}
 
     max_cells = C.MATRIX_SIZE * C.MATRIX_SIZE
     if not 0 <= submitted_count <= max_cells:
         return {
-            player.id_in_group: dict(error=f'答案必须在 0 到 {max_cells} 之间。')
+            player.id_in_group: dict(error=tr('integer_range', max_cells=max_cells))
         }
 
     correct_count = player.current_correct_count
@@ -513,8 +514,8 @@ def live_task(player: Player, data):
 
 class TaskStartWaitPage(WaitPage):
     wait_for_all_groups = True
-    title_text = '请等待其他参与者'
-    body_text = '所有参与者到达后，五分钟计时任务将统一开始。'
+    title_text = tr('wait_others')
+    body_text = tr('wait_others_body')
 
 
 class CompensationChoice(Page):
@@ -528,7 +529,7 @@ class CompensationChoice(Page):
     @staticmethod
     def vars_for_template(player: Player):
         if player.round_number != 3:
-            return dict(choice_cards=[])
+            return template_context(choice_cards=[])
 
         choice_order = player.field_maybe_none('choice_order')
         if not choice_order:
@@ -542,14 +543,13 @@ class CompensationChoice(Page):
                 value='tournament',
                 title='Tournament',
                 description=(
-                    '你的 Block 3 表现将与同组三名其他参与者的 Block 2 表现比较，'
-                    '报酬取决于比较结果。'
+                    tr('tournament_description')
                 ),
             ),
             piece_rate=dict(
                 value='piece_rate',
                 title='Piece rate',
-                description='你的报酬只根据自己 Block 3 的任务表现计算。',
+                description=tr('piece_rate_description'),
             ),
         )
         ordered_keys = (
@@ -557,12 +557,12 @@ class CompensationChoice(Page):
             if choice_order == 'tournament_first'
             else ['piece_rate', 'tournament']
         )
-        return dict(choice_cards=[cards[key] for key in ordered_keys])
+        return template_context(choice_cards=[cards[key] for key in ordered_keys])
 
 
 class MyPage(Page):
     live_method = live_task
-    timer_text = '剩余时间：'
+    timer_text = tr('remaining_time')
 
     @staticmethod
     def get_timeout_seconds(player: Player):
@@ -572,11 +572,11 @@ class MyPage(Page):
     @staticmethod
     def vars_for_template(player: Player):
         ensure_task_state(player)
-        return dict(
+        return template_context(
             matrix_size=C.MATRIX_SIZE,
             TreatmentAI=TreatmentAI,
             ShowFeedback=ShowFeedback,
-            CopyButtonText='复制左边整个矩阵',
+            CopyButtonText=tr('copy_matrix'),
         )
 
     @staticmethod
@@ -590,6 +590,7 @@ class MyPage(Page):
                 round(player.cumulative_score, 2) if ShowFeedback else None
             ),
             initial_chat_log=load_chat_log(player) if TreatmentAI else [],
+            texts=TEXT,
         )
 
     @staticmethod
@@ -598,12 +599,16 @@ class MyPage(Page):
 
 
 class RankingWaitPage(WaitPage):
-    title_text = '请等待本组其他参与者'
-    body_text = '本组所有参与者完成任务后，将计算当前 Block 排名。'
+    title_text = tr('wait_group')
+    body_text = tr('wait_group_body')
     after_all_players_arrive = rank_group
 
 
 class Results(Page):
+    @staticmethod
+    def vars_for_template(player: Player):
+        return template_context()
+
     @staticmethod
     def is_displayed(player: Player):
         # When feedback is disabled, do not expose round scores between stages.

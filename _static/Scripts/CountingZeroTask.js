@@ -47,7 +47,7 @@
             document.execCommand('copy');
             temporaryTextArea.remove();
         }
-        if (copyStatusElement) copyStatusElement.textContent = '已复制';
+        if (copyStatusElement) copyStatusElement.textContent = js_vars.texts.copied;
     }
 
     function setSubmitting(isSubmitting) {
@@ -58,7 +58,7 @@
     function submitAnswer() {
         if (answerElement.value === '') {
             feedbackElement.className = 'error-feedback';
-            feedbackElement.textContent = '请输入 0 的数量。';
+            feedbackElement.textContent = js_vars.texts.enter_zero_count;
             return;
         }
         setSubmitting(true);
@@ -103,9 +103,9 @@
         }
         if (js_vars.show_feedback && data.feedback) {
             feedbackElement.className = 'score-feedback';
-            feedbackElement.textContent =
-                `本次得分：${Number(data.feedback.score).toFixed(2)}；` +
-                `累计得分：${Number(data.feedback.cumulative_score).toFixed(2)}`;
+            feedbackElement.textContent = js_vars.texts.score_feedback
+                .replace('{score}', Number(data.feedback.score).toFixed(2))
+                .replace('{total}', Number(data.feedback.cumulative_score).toFixed(2));
         }
         answerElement.value = '';
         setSubmitting(false);

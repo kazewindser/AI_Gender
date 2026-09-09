@@ -11,6 +11,7 @@ import time
 
 from openai import OpenAI
 from settings import ShowFeedback, TreatmentAI
+from _i18n import TEXT, template_context, tr
 from _static.StockTS.StockBank import StockBank
 
 
@@ -21,7 +22,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'StockForecast'
     PLAYERS_PER_GROUP = 4
     NUM_ROUNDS = 3
-    TASK_SECONDS = 5 * 60
+    TASK_SECONDS = 4 * 60
     MAX_SCORE_PER_FORECAST = 10
     ZERO_SCORE_ERROR_THRESHOLD = 0.20
     HISTORY_TRADING_DAYS = 252
@@ -30,7 +31,7 @@ class C(BaseConstants):
     AI_MODEL = 'gpt-5.6-luna'
     AI_REASONING_EFFORT = 'none'
     AI_TEMPERATURE = 1
-    AI_SYSTEM_PROMPT = 'Always respond in Japanese.'
+    AI_SYSTEM_PROMPT = tr('ai_system_prompt')
 
 
 
@@ -372,10 +373,10 @@ def append_chat_log(player: Player, sender, text):
 
 def live_ai_chat(player: Player, data):
     if not TreatmentAI:
-        return {player.id_in_group: dict(type='chat_error', text='当前条件不提供 AI。')}
+        return {player.id_in_group: dict(type='chat_error', text=tr('ai_unavailable'))}
     text = str(data.get('text', '')).strip()
     if not text:
-        return {player.id_in_group: dict(type='chat_error', text='请输入消息。')}
+        return {player.id_in_group: dict(type='chat_error', text=tr('enter_message'))}
     messages = load_ai_messages(player)
     messages.append({'role': 'user', 'content': text})
     player.ai_messages = json.dumps(messages, ensure_ascii=False)
@@ -392,7 +393,7 @@ def live_ai_chat(player: Player, data):
         print(f'OpenAI chat request failed: {error}')
         return {
             player.id_in_group: dict(
-                type='chat_error', text='AI 暂时无法回复，请稍后再试。'
+                type='chat_error', text=tr('ai_failed')
             )
         }
     messages.append({'role': 'assistant', 'content': output})
@@ -419,9 +420,9 @@ def live_task(player: Player, data):
     try:
         forecast = float(data.get('answer'))
     except (TypeError, ValueError):
-        return {player.id_in_group: dict(error='请输入有效的数字。')}
+        return {player.id_in_group: dict(error=tr('enter_number'))}
     if not 0 < forecast < 100000:
-        return {player.id_in_group: dict(error='预测价格必须是大于 0 的数字。')}
+        return {player.id_in_group: dict(error=tr('positive_forecast'))}
 
     correct_price = player.current_correct_price
     absolute_error = abs(forecast - correct_price)
@@ -481,8 +482,8 @@ def live_task(player: Player, data):
 
 class TaskStartWaitPage(WaitPage):
     wait_for_all_groups = True
-    title_text = '请等待其他参与者'
-    body_text = '所有参与者到达后，五分钟计时任务将统一开始。'
+    title_text = tr('wait_others')
+    body_text = tr('wait_others_body')
 
 
 class CompensationChoice(Page):
@@ -495,7 +496,7 @@ class CompensationChoice(Page):
     @staticmethod
     def vars_for_template(player: Player):
         if player.round_number != 3:
-            return dict(choice_cards=[])
+            return template_context(choice_cards=[])
         order = player.field_maybe_none('choice_order')
         if not order:
             order = random.choice(['tournament_first', 'piece_rate_first'])
@@ -505,14 +506,13 @@ class CompensationChoice(Page):
                 value='tournament',
                 title='Tournament',
                 description=(
-                    '你的 Block 3 表现将与同组三名其他参与者的 Block 2 表现比较，'
-                    '报酬取决于比较结果。'
+                    tr('tournament_description')
                 ),
             ),
             piece_rate=dict(
                 value='piece_rate',
                 title='Piece rate',
-                description='你的报酬只根据自己 Block 3 的任务表现计算。',
+                description=tr('piece_rate_description'),
             ),
         )
         keys = (
@@ -520,12 +520,12 @@ class CompensationChoice(Page):
             if order == 'tournament_first'
             else ['piece_rate', 'tournament']
         )
-        return dict(choice_cards=[cards[key] for key in keys])
+        return template_context(choice_cards=[cards[key] for key in keys])
 
 
 class MyPage(Page):
     live_method = live_task
-    timer_text = '剩余时间：'
+    timer_text = tr('remaining_time')
 
     @staticmethod
     def get_timeout_seconds(player: Player):
@@ -535,10 +535,10 @@ class MyPage(Page):
     @staticmethod
     def vars_for_template(player: Player):
         ensure_task_state(player)
-        return dict(
+        return template_context(
             TreatmentAI=TreatmentAI,
             ShowFeedback=ShowFeedback,
-            CopyButtonText='一键复制左边所有股价时间序列',
+            CopyButtonText=tr('copy_series'),
         )
 
     @staticmethod
@@ -552,6 +552,7 @@ class MyPage(Page):
                 round(player.cumulative_score, 2) if ShowFeedback else None
             ),
             initial_chat_log=load_chat_log(player) if TreatmentAI else [],
+            texts=TEXT,
         )
 
     @staticmethod
@@ -560,12 +561,16 @@ class MyPage(Page):
 
 
 class RankingWaitPage(WaitPage):
-    title_text = '请等待本组其他参与者'
-    body_text = '本组所有参与者完成任务后，将计算当前 Block 排名。'
+    title_text = tr('wait_group')
+    body_text = tr('wait_group_body')
     after_all_players_arrive = rank_group
 
 
 class Results(Page):
+    @staticmethod
+    def vars_for_template(player: Player):
+        return template_context()
+
     @staticmethod
     def is_displayed(player: Player):
         return ShowFeedback

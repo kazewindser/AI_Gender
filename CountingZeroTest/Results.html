@@ -1,9 +1,9 @@
-{{ block title }}测试完成{{ endblock }}
+{{ block title }}{{ t.test_complete }}{{ endblock }}
 
 {{ block content }}
 <div class="alert alert-success">
-    5分钟数零任务已经结束。你共完成 <strong>{{ player.total_questions }}</strong> 道题，累计得分为
-    <strong>{{ player.cumulative_score|to2 }}</strong> 分。
+    {{ t.count_test_result }} <strong>{{ player.total_questions }}</strong> {{ t.questions_unit }}
+    <strong>{{ player.cumulative_score|to2 }}</strong> {{ t.score_unit }}
 </div>
 {{ next_button }}
 {{ endblock }}

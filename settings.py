@@ -92,8 +92,9 @@ ROOMS = [
 
 
 
-# ISO-639 code
-# for example: de, fr, ja, ko, zh-hans
+# Participant-interface language. Supported by this project:
+# 'zh-hans' = Simplified Chinese, 'en' = English, 'ja' = Japanese.
+# Restart oTree after changing this value.
 LANGUAGE_CODE = 'ja'
 
 # e.g. EUR, GBP, CNY, JPY

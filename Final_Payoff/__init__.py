@@ -1,4 +1,5 @@
 from otree.api import *
+from _i18n import template_context, tr
 
 
 doc = """Display the randomly selected task stage and final payoff."""
@@ -86,7 +87,9 @@ class FinalResults(Page):
                 selected=selected_round == 3,
             ),
         ]
-        return dict(
+        for card in cards:
+            card['rank_text'] = tr('rank_format', rank=card['rank'])
+        return template_context(
             payoff_cards=cards,
             final_score=final_score,
         )

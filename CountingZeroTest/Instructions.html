@@ -1,4 +1,4 @@
-{{ block title }}数零任务说明{{ endblock }}
+{{ block title }}{{ t.count_instructions_title }}{{ endblock }}
 
 {{ block styles }}
 <link rel="stylesheet" href="{% static 'Styles/TestInstructions.css' %}?v=20260823-1">
@@ -7,48 +7,47 @@
 {{ block content }}
 <div class="test-instructions">
     <section class="instruction-hero">
-        <h2>数零任务</h2>
-        <p>每道题会显示一个15×15的0/1矩阵。你的任务是判断矩阵中0的数量。</p>
+        <h2>{{ t.count_task }}</h2>
+        <p>{{ t.count_intro }}</p>
         <div class="instruction-facts">
-            <div class="instruction-fact"><strong>5分钟</strong><span>固定作答时间</span></div>
-            <div class="instruction-fact"><strong>题数不限</strong><span>完成后自动进入下一题</span></div>
-            <div class="instruction-fact"><strong>0–10 points</strong><span>每道题的得分范围</span></div>
+            <div class="instruction-fact"><strong>{{ t.five_minutes }}</strong><span>{{ t.fixed_time }}</span></div>
+            <div class="instruction-fact"><strong>{{ t.unlimited }}</strong><span>{{ t.auto_next }}</span></div>
+            <div class="instruction-fact"><strong>0–10 points</strong><span>{{ t.score_range }}</span></div>
         </div>
     </section>
 
     <section class="instruction-section">
-        <h3>作答目标</h3>
+        <h3>{{ t.answer_goal }}</h3>
         <div class="instruction-emphasis">
-            请在规定时间内<strong>尽可能多、而且尽可能准确地</strong>完成题目。<strong>最终得分是5分钟内所有题目得分之和。</strong>
-            请思考计分规则，并思考如何才能在有限时间内获得更高分。
+            {{ t.goal_text }}
         </div>
     </section>
 
     <section class="instruction-section">
-        <h3>计分规则</h3>
-        <p>每道题最低为0 points，最高为10 points。首先计算相对误差率：</p>
+        <h3>{{ t.scoring_rules }}</h3>
+        <p>{{ t.score_rule_intro }}</p>
         <div class="formula-card">
-            <div class="formula-label">相对误差率</div>
-            <math display="block" aria-label="相对误差率等于提交答案减正确答案的绝对值除以正确答案">
-                <mrow><mtext>相对误差率</mtext><mo>=</mo><mfrac><mrow><mo>|</mo><mtext>提交答案</mtext><mo>−</mo><mtext>正确答案</mtext><mo>|</mo></mrow><mtext>正确答案</mtext></mfrac></mrow>
+            <div class="formula-label">{{ t.relative_error }}</div>
+            <math display="block">
+                <mrow><mtext>{{ t.relative_error }}</mtext><mo>=</mo><mfrac><mrow><mo>|</mo><mtext>{{ t.submitted_answer }}</mtext><mo>−</mo><mtext>{{ t.correct_answer }}</mtext><mo>|</mo></mrow><mtext>{{ t.correct_answer }}</mtext></mfrac></mrow>
             </math>
         </div>
-        <p>该题得分按照以下公式计算：</p>
+        <p>{{ t.score_formula_intro }}</p>
         <div class="formula-card">
-            <div class="formula-label">单题得分</div>
-            <math display="block" aria-label="得分等于零与十乘以一减相对误差率除以百分之二十两者中的较大值">
-                <mrow><mtext>得分</mtext><mo>=</mo><mi>max</mi><mo>[</mo><mn>0</mn><mo>,</mo><mn>10</mn><mo>×</mo><mo>(</mo><mn>1</mn><mo>−</mo><mfrac><mtext>相对误差率</mtext><mtext>20%</mtext></mfrac><mo>)</mo><mo>]</mo></mrow>
+            <div class="formula-label">{{ t.question_score }}</div>
+            <math display="block">
+                <mrow><mtext>{{ t.score }}</mtext><mo>=</mo><mi>max</mi><mo>[</mo><mn>0</mn><mo>,</mo><mn>10</mn><mo>×</mo><mo>(</mo><mn>1</mn><mo>−</mo><mfrac><mtext>{{ t.relative_error }}</mtext><mtext>20%</mtext></mfrac><mo>)</mo><mo>]</mo></mrow>
             </math>
         </div>
-        <p class="score-warning"><strong>注意：</strong>完全正确得10 points；相对误差率达到或超过20%时，该题得0 points。</p>
+        <p class="score-warning"><strong>{{ t.warning }}</strong>{{ t.warning_text }}</p>
     </section>
 
     {{ if TreatmentAI }}
     <section class="instruction-section ai-instruction">
-        <h3>ChatGPT 辅助</h3>
-        <p><strong>你可以使用任务界面的 ChatGPT 帮助你。</strong></p>
-        <p><strong>请使用实验页面上的 ChatGPT，不要使用自己的 ChatGPT。如何使用请自己决定。</strong></p>
-        <p>ChatGPT 使用的程序提示词如下：</p>
+        <h3>{{ t.ai_help }}</h3>
+        <p><strong>{{ t.ai_can_help }}</strong></p>
+        <p><strong>{{ t.ai_use_note }}</strong></p>
+        <p>{{ t.ai_prompt_intro }}</p>
         <pre class="prompt-box">{{ system_prompt }}</pre>
     </section>
     {{ endif }}

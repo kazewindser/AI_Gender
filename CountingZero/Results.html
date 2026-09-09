@@ -1,13 +1,12 @@
-{{ block title }}Block {{ player.round_number }} 完成{{ endblock }}
+{{ block title }}Block {{ player.round_number }} {{ t.block_complete }}{{ endblock }}
 
 {{ block content }}
 <div class="alert alert-success">
-    当前 Block 的五分钟任务已经结束。你的累计得分为
-    <strong>{{ player.round_total_score|to2 }}</strong> points。
+    {{ t.round_finished }} <strong>{{ player.round_total_score|to2 }}</strong> {{ t.points }}.
 </div>
 {{ if player.round_number == 3 }}
     <p>
-        你在当前 Block 选择的报酬方式是：
+        {{ t.chosen_scheme }}
         <strong>{{ player.payment_choice }}</strong>。
     </p>
 {{ endif }}

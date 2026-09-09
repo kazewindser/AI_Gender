@@ -71,7 +71,7 @@
         const dayAxisLabel = svgElement('text', {
             x: 12, y: height - 8, class: 'chart-x-label chart-x-axis-title',
         });
-        dayAxisLabel.textContent = 'Day';
+        dayAxisLabel.textContent = js_vars.texts.day;
         chartElement.appendChild(dayAxisLabel);
         [1, 50, 100, 150, 200, 252]
             .filter(day => day <= values.length)
@@ -147,7 +147,7 @@
             'transform',
             `translate(${tooltipX},${Math.max(pointY, 38)})`
         );
-        chartGeometry.tooltipText.textContent = `Day ${index + 1}: ${value.toFixed(2)}`;
+        chartGeometry.tooltipText.textContent = `${js_vars.texts.day} ${index + 1}: ${value.toFixed(2)}`;
         chartElement.classList.add('show-chart-hover');
     }
 
@@ -169,7 +169,7 @@
             document.execCommand('copy');
             temporaryTextArea.remove();
         }
-        if (copyStatusElement) copyStatusElement.textContent = '已复制';
+        if (copyStatusElement) copyStatusElement.textContent = js_vars.texts.copied;
     }
 
     function setSubmitting(value) {
@@ -180,7 +180,7 @@
     function submitAnswer() {
         if (answerElement.value === '') {
             feedbackElement.className = 'error-feedback';
-            feedbackElement.textContent = '请输入预测价格。';
+            feedbackElement.textContent = js_vars.texts.enter_forecast;
             return;
         }
         setSubmitting(true);
@@ -222,9 +222,9 @@
         }
         if (js_vars.show_feedback && data.feedback) {
             feedbackElement.className = 'score-feedback';
-            feedbackElement.textContent =
-                `本次得分：${Number(data.feedback.score).toFixed(2)}；` +
-                `累计得分：${Number(data.feedback.cumulative_score).toFixed(2)}`;
+            feedbackElement.textContent = js_vars.texts.score_feedback
+                .replace('{score}', Number(data.feedback.score).toFixed(2))
+                .replace('{total}', Number(data.feedback.cumulative_score).toFixed(2));
         }
         answerElement.value = '';
         setSubmitting(false);

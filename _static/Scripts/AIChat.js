@@ -41,7 +41,7 @@
         awaitingResponse = value;
         sendButton.disabled = value;
         inputElement.disabled = value;
-        statusElement.textContent = value ? 'AI 正在回复……' : '';
+        statusElement.textContent = value ? js_vars.texts.ai_replying : '';
         if (!value) inputElement.focus();
     }
 

@@ -10,6 +10,7 @@ import time
 
 from openai import OpenAI
 from settings import ShowFeedback
+from _i18n import TEXT, template_context, tr
 from _static.StockTS.StockBank import StockBank
 
 
@@ -20,7 +21,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'StockForecastTest'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    TASK_SECONDS = 5 * 60
+    TASK_SECONDS = 4 * 60
     MAX_SCORE_PER_FORECAST = 10
     ZERO_SCORE_ERROR_THRESHOLD = 0.20
     HISTORY_TRADING_DAYS = 252
@@ -29,7 +30,7 @@ class C(BaseConstants):
     AI_MODEL = 'gpt-5.6-luna'
     AI_REASONING_EFFORT = 'none'
     AI_TEMPERATURE = 1
-    AI_SYSTEM_PROMPT = 'Always respond in Japanese.'
+    AI_SYSTEM_PROMPT = tr('ai_system_prompt')
 
 
 class Subsession(BaseSubsession):
@@ -156,10 +157,10 @@ def state_payload(player, feedback=None):
 
 def live_ai_chat(player, data):
     if not treatment_ai(player):
-        return {player.id_in_group: dict(type='chat_error', text='当前条件不提供 AI。')}
+        return {player.id_in_group: dict(type='chat_error', text=tr('ai_unavailable'))}
     text = str(data.get('text', '')).strip()
     if not text:
-        return {player.id_in_group: dict(type='chat_error', text='请输入消息。')}
+        return {player.id_in_group: dict(type='chat_error', text=tr('enter_message'))}
     messages = load_ai_messages(player)
     messages.append({'role': 'user', 'content': text})
     player.ai_messages = json.dumps(messages, ensure_ascii=False)
@@ -174,7 +175,7 @@ def live_ai_chat(player, data):
         output = completion.choices[0].message.content or ''
     except Exception as error:
         print(f'OpenAI chat request failed: {error}')
-        return {player.id_in_group: dict(type='chat_error', text='AI 暂时无法回复，请稍后再试。')}
+        return {player.id_in_group: dict(type='chat_error', text=tr('ai_failed'))}
     messages.append({'role': 'assistant', 'content': output})
     player.ai_messages = json.dumps(messages, ensure_ascii=False)
     append_chat_log(player, 'AI', output)
@@ -195,9 +196,9 @@ def live_task(player, data):
     try:
         forecast = float(data.get('answer'))
     except (TypeError, ValueError):
-        return {player.id_in_group: dict(error='请输入有效的数字。')}
+        return {player.id_in_group: dict(error=tr('enter_number'))}
     if not 0 < forecast < 100000:
-        return {player.id_in_group: dict(error='预测价格必须是大于0的数字。')}
+        return {player.id_in_group: dict(error=tr('positive_forecast'))}
     correct_price = player.current_correct_price
     absolute_error = abs(forecast - correct_price)
     relative_error = absolute_error / correct_price
@@ -238,12 +239,12 @@ def live_task(player, data):
 class Instructions(Page):
     @staticmethod
     def vars_for_template(player):
-        return dict(TreatmentAI=treatment_ai(player), system_prompt=C.AI_SYSTEM_PROMPT)
+        return template_context(TreatmentAI=treatment_ai(player), system_prompt=C.AI_SYSTEM_PROMPT)
 
 
 class MyPage(Page):
     live_method = live_task
-    timer_text = '剩余时间：'
+    timer_text = tr('remaining_time')
 
     @staticmethod
     def get_timeout_seconds(player):
@@ -254,10 +255,10 @@ class MyPage(Page):
     def vars_for_template(player):
         ensure_task_state(player)
         has_ai = treatment_ai(player)
-        return dict(
+        return template_context(
             TreatmentAI=has_ai,
             ShowFeedback=ShowFeedback,
-            CopyButtonText='一键复制左边所有股价时间序列',
+            CopyButtonText=tr('copy_series'),
         )
 
     @staticmethod
@@ -270,11 +271,14 @@ class MyPage(Page):
             show_feedback=ShowFeedback,
             initial_cumulative_score=round(player.cumulative_score, 2) if ShowFeedback else None,
             initial_chat_log=load_chat_log(player) if has_ai else [],
+            texts=TEXT,
         )
 
 
 class Results(Page):
-    pass
+    @staticmethod
+    def vars_for_template(player):
+        return template_context()
 
 
 page_sequence = [Instructions, MyPage, Results]
