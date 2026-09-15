@@ -58,8 +58,8 @@ class Player(BasePlayer):
     ranking_comparison = models.LongStringField(blank=True)
     payment_choice = models.StringField(
         choices=[
-            ['piece_rate', 'Piece rate'],
-            ['tournament', 'Tournament'],
+            ['piece_rate', tr('piece_rate')],
+            ['tournament', tr('tournament')],
         ],
         widget=widgets.RadioSelect,
     )
@@ -541,14 +541,14 @@ class CompensationChoice(Page):
         cards = dict(
             tournament=dict(
                 value='tournament',
-                title='Tournament',
+                title=tr('tournament'),
                 description=(
                     tr('tournament_description')
                 ),
             ),
             piece_rate=dict(
                 value='piece_rate',
-                title='Piece rate',
+                title=tr('piece_rate'),
                 description=tr('piece_rate_description'),
             ),
         )
@@ -616,12 +616,25 @@ class Results(Page):
         return ShowFeedback
 
 
+class TaskComplete(Page):
+    template_name = 'global/TaskComplete.html'
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == C.NUM_ROUNDS
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return template_context()
+
+
 page_sequence = [
     CompensationChoice,
     TaskStartWaitPage,
     MyPage,
     RankingWaitPage,
     Results,
+    TaskComplete,
 ]
 
 

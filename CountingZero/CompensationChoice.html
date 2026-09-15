@@ -1,7 +1,7 @@
 {{ block title }}
-    {{ if player.round_number == 1 }}Block 1：Piece rate{{ endif }}
-    {{ if player.round_number == 2 }}Block 2：Tournament{{ endif }}
-    {{ if player.round_number == 3 }}Block 3：{{ t.choose_scheme }}{{ endif }}
+    {{ if player.round_number == 1 }}{{ t.task_label }} 1：{{ t.piece_rate }}{{ endif }}
+    {{ if player.round_number == 2 }}{{ t.task_label }} 2：{{ t.tournament }}{{ endif }}
+    {{ if player.round_number == 3 }}{{ t.task_label }} 3：{{ t.choose_scheme }}{{ endif }}
 {{ endblock }}
 
 {{ block styles }}
@@ -16,7 +16,7 @@
         </p>
 
         <div class="rule-card">
-            <span class="choice-card-title">Piece rate</span>
+            <span class="choice-card-title">{{ t.piece_rate }}</span>
             <span class="choice-card-description">
                 {{ t.piece_rule }}
             </span>
@@ -33,7 +33,7 @@
         </p>
 
         <div class="rule-card">
-            <span class="choice-card-title">Tournament</span>
+            <span class="choice-card-title">{{ t.tournament }}</span>
             <span class="choice-card-description">
                 {{ t.tournament_rule }}
             </span>

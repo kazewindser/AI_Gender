@@ -1,10 +1,10 @@
 {{ block title }}
-    Block {{ player.round_number }}:
-    {{ if player.round_number == 1 }}Piece rate{{ endif }}
-    {{ if player.round_number == 2 }}Tournament{{ endif }}
+    {{ t.task_label }} {{ player.round_number }}:
+    {{ if player.round_number == 1 }}{{ t.piece_rate }}{{ endif }}
+    {{ if player.round_number == 2 }}{{ t.tournament }}{{ endif }}
     {{ if player.round_number == 3 }}
-        {{ if player.payment_choice == 'piece_rate' }}Piece rate{{ endif }}
-        {{ if player.payment_choice == 'tournament' }}Tournament{{ endif }}
+        {{ if player.payment_choice == 'piece_rate' }}{{ t.piece_rate }}{{ endif }}
+        {{ if player.payment_choice == 'tournament' }}{{ t.tournament }}{{ endif }}
     {{ endif }}
 {{ endblock }}
 

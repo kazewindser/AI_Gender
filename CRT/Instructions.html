@@ -1,0 +1,5 @@
+{{ block title }}{{ crt_text.instructions_title }}{{ endblock }}
+{{ block content }}
+{{ for paragraph in crt_text.instructions }}<p>{{ paragraph }}</p>{{ endfor }}
+<button class="otree-btn-next btn btn-primary">{{ crt_text.next }}</button>
+{{ endblock }}

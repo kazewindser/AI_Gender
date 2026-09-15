@@ -4,13 +4,13 @@ SESSION_CONFIGS = [
     dict(
         name='counting_zero_demo',
         display_name='Counting Zero Demo',
-        app_sequence=['CountingZero', 'Final_Payoff'],
+        app_sequence=['Quiz', 'CountingZero', 'CRT', 'questionnaire', 'Final_Payoff'],
         num_demo_participants=4,
     ),
     dict(
         name='stock_forecast_demo',
         display_name='Stock Forecast Demo',
-        app_sequence=['StockForecast', 'Final_Payoff'],
+        app_sequence=['Quiz', 'StockForecast', 'CRT', 'questionnaire', 'Final_Payoff'],
         num_demo_participants=4,
     ),
     dict(
@@ -41,6 +41,18 @@ SESSION_CONFIGS = [
         num_demo_participants=1,
         treatment_ai=False,
     ),
+    dict(
+        name='CRT',
+        display_name='CRT',
+        app_sequence=['CRT'],
+        num_demo_participants=1,
+    ),
+    dict(
+        name='questionnaire',
+        display_name='Questionnaire',
+        app_sequence=['questionnaire'],
+        num_demo_participants=1,
+    )
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
@@ -49,7 +61,7 @@ SESSION_CONFIGS = [
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
+    real_world_currency_per_point=6.00, participation_fee=500, doc=""
 )
 
 PARTICIPANT_FIELDS = [
@@ -76,7 +88,7 @@ PARTICIPANT_FIELDS = [
 SESSION_FIELDS = []
 
 
-TreatmentAI = True
+TreatmentAI = False
 ShowFeedback = False
 
 # rooms
@@ -98,7 +110,11 @@ ROOMS = [
 LANGUAGE_CODE = 'ja'
 
 # e.g. EUR, GBP, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'USD'
+REAL_WORLD_CURRENCY_CODE = 'JPY'
+# Preserve half-yen investment earnings for odd investment amounts.
+REAL_WORLD_CURRENCY_DECIMAL_PLACES = 2
+# Keep fixed-yen rewards accurate when converted to points (e.g. 20 / 6).
+POINTS_DECIMAL_PLACES = 6
 USE_POINTS = True
 
 ADMIN_USERNAME = 'admin'

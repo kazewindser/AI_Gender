@@ -1,0 +1,12 @@
+{{ block title }}{{ questionnaire_text.title }}{{ endblock }}
+
+{{ block content }}
+    {{ formfield 'age' }}
+    {{ formfield 'gender' }}
+    {{ formfield 'lan_jp' }}
+    {{ formfield 'affiliate' }}
+    {{ formfield 'chatGPT' }}
+    {{ formfield 'chatGPT_times' }}
+    {{ formfield 'chatGPT_plus' }}
+    <button class="otree-btn-next btn btn-primary">{{ questionnaire_text.next }}</button>
+{{ endblock }}

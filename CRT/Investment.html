@@ -1,0 +1,8 @@
+{{ block title }}{{ crt_text.risk_title }}{{ endblock }}
+{{ block content }}
+<p>{{ crt_text.risk_intro }}</p>
+<ul><li>{{ crt_text.risk_success }}</li><li>{{ crt_text.risk_failure }}</li></ul>
+<p>{{ crt_text.risk_note }}</p>
+{{ formfields }}
+<button class="otree-btn-next btn btn-primary">{{ crt_text.risk_submit }}</button>
+{{ endblock }}

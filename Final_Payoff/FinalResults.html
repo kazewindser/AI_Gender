@@ -32,10 +32,47 @@
         {{ endfor }}
     </div>
 
-    <div class="final-score-panel">
-        <span>{{ t.final_score }}</span>
-        <strong>{{ final_score|to2 }}</strong>
-        <span>{{ t.points }}</span>
+    <div class="main-reward-strip">
+        <div><span class="reward-label">{{ t.main_task_reward }}</span><p class="reward-detail">{{ final_score|to2 }} {{ t.points }} × {{ point_rate }} {{ t.yen }}</p></div>
+        <div class="reward-amount">{{ main_payoff|to2 }} <span>{{ t.yen }}</span></div>
     </div>
+
+    <hr class="payoff-divider">
+
+    {{ if has_crt }}
+    <section class="extra-rewards">
+        <article class="extra-reward-card">
+            <h3>{{ t.crt_reward }}</h3>
+            <div class="reward-amount">{{ crt_payoff_yen }} <span>{{ t.yen }}</span></div>
+            <dl class="reward-facts"><div><dt>{{ t.crt_correct_count }}</dt><dd>{{ crt_correct_count }} / {{ crt_question_count }}</dd></div></dl>
+        </article>
+        {{ if has_risk }}
+        <article class="extra-reward-card">
+            <h3>{{ risk_text.risk_reward }}</h3>
+            <div class="reward-amount">{{ risk_payoff_yen|to2 }} <span>{{ t.yen }}</span></div>
+            <dl class="reward-facts">
+                <div><dt>{{ risk_text.risk_invested }}</dt><dd>{{ risk_investment_yen }} {{ t.yen }}</dd></div>
+                <div><dt>{{ risk_text.risk_outcome }}</dt><dd>{{ risk_outcome }}</dd></div>
+            </dl>
+        </article>
+        {{ endif }}
+    </section>
+    {{ endif }}
+
+    <section class="payment-summary">
+        <div class="payment-breakdown">
+            <h3>{{ t.total_payment }}</h3>
+            <dl class="reward-facts">
+                <div><dt>{{ t.participation_fee_label }}</dt><dd>{{ participation_fee|to2 }} {{ t.yen }}</dd></div>
+                <div><dt>{{ t.additional_payment }}</dt><dd>{{ additional_payoff }}</dd></div>
+            </dl>
+            <p class="rounding-note">{{ t.payment_rounding_note }}</p>
+        </div>
+        <div class="payment-final">
+            <span>{{ t.payment_after_rounding }}</span>
+            <div><strong>{{ rounded_payoff }}</strong> <span>{{ t.yen }}</span></div>
+        </div>
+    </section>
 </div>
+<div class="mt-4">{{ next_button }}</div>
 {{ endblock }}
