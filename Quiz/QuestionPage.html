@@ -4,7 +4,7 @@
 
 {{ block content }}
 
-<div style="margin: 20px auto; max-width: 800px;">
+<div style="margin: 20px 0;">
 
     <p style="font-size: 1.1em; margin: 20px 0;">{{ question_text }}</p>
 
@@ -18,6 +18,21 @@
             </div>
         {{ endfor }}
     </div>
+
+    <details style="margin: 20px 0;">
+        <summary style="cursor: pointer; color: #0d6efd;">{{ quiz_text.view_instructions }}</summary>
+        <div style="margin-top: 15px;">
+            <iframe src="{{ slides_url }}?start=false&loop=false&delayms=30000"
+                    title="{{ quiz_text.instructions_title }}"
+                    frameborder="0"
+                    width="100%"
+                    height="600"
+                    allowfullscreen="true"
+                    mozallowfullscreen="true"
+                    webkitallowfullscreen="true">
+            </iframe>
+        </div>
+    </details>
 
     {{ next_button }}
 

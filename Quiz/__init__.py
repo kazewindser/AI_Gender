@@ -2,6 +2,7 @@ from otree.api import *
 from Quiz.QuestionBank import QUESTIONS
 from Quiz.QuestionBank_en import QUESTIONS as QUESTIONS_EN
 from settings import LANGUAGE_CODE
+from Instruction import get_slides_url
 
 doc = """
 実験クイズアプリ - 6問の理解度確認テスト
@@ -11,6 +12,8 @@ which_language = {'en': False, 'ja': False}
 which_language[LANGUAGE_CODE] = True
 
 QUIZ_TEXT = {
+    'view_instructions': 'View experiment instructions' if which_language['en'] else '実験の説明を見る',
+    'instructions_title': 'Experiment instructions' if which_language['en'] else '実験の説明',
     'start': "Now, let’s begin the quiz." if which_language['en'] else 'それでは、クイズに行きましょう。',
     'question': 'Question' if which_language['en'] else '問題',
     'complete': 'Quiz complete' if which_language['en'] else 'クイズ完了',
@@ -63,6 +66,7 @@ class QuestionPage(Page):
             'question_count': C.NUM_ROUNDS,
             'question_text': question_data['question'],
             'choices': question_data['choices'],
+            'slides_url': get_slides_url(player),
         }
 
     @staticmethod

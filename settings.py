@@ -4,13 +4,13 @@ SESSION_CONFIGS = [
     dict(
         name='counting_zero_demo',
         display_name='Counting Zero Demo',
-        app_sequence=['Quiz', 'CountingZero', 'CRT', 'questionnaire', 'Final_Payoff'],
+        app_sequence=['Instruction', 'Quiz', 'CountingZero', 'CRT', 'questionnaire', 'Final_Payoff'],
         num_demo_participants=4,
     ),
     dict(
         name='stock_forecast_demo',
         display_name='Stock Forecast Demo',
-        app_sequence=['Quiz', 'StockForecast', 'CRT', 'questionnaire', 'Final_Payoff'],
+        app_sequence=['Instruction', 'Quiz', 'StockForecast', 'CRT', 'questionnaire', 'Final_Payoff'],
         num_demo_participants=4,
     ),
     dict(

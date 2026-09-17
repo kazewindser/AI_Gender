@@ -1,0 +1,41 @@
+{{ block title }}
+            <p><center><strong>{{ if is_english }}Instructions{{ else }}説明{{ endif }}</strong></center></p>
+{{ endblock }}
+{{ block content }}
+
+    <div>
+        {{ if is_english }}
+        Please read the instructions for the experiment carefully.<br>
+        Use the buttons in the <b><span class="text-danger">bottom-left corner of the slides</span></b>
+        to move forward or backward.
+        {{ else }}
+        これから行う実験の説明をよく読んでください。<br>
+        <b><span class="text-danger">スライド左下</span></b>にあるボタンを押すと、
+        スライドを前後に進めることができます。
+        {{ endif }}
+    </div>
+    <p> </p>
+    <iframe src="{{ slides_url }}?start=false&loop=false&delayms=30000"
+            frameborder="0"
+            width="100%"
+            height="600"
+            allowfullscreen="true"
+            mozallowfullscreen="true"
+            webkitallowfullscreen="true">
+    </iframe>
+
+    <div id="nextbtn" class="justify-content-end mt-1" style="display: none;">
+        <button class="btn-primary btn">{{ if is_english }}Next{{ else }}次へ{{ endif }}</button>
+    </div>
+
+    <script>
+        // 秒単位で指定
+        delaytime = 2;
+        window.setTimeout(show_btn, delaytime*30000);
+        function show_btn(){
+            ele = document.getElementById("nextbtn");
+            ele.style.display = "block";
+            ele.classList.add("d-flex");
+        }
+    </script>
+{{ endblock }}
