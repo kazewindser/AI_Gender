@@ -16,6 +16,7 @@ class PracticeTests(unittest.TestCase):
         player.id_in_group = 1
         player.participant = SimpleNamespace(code=app)
         player.round_number = 1
+        player.session = SimpleNamespace(config={})
         player.practice_state = ''
         player.field_maybe_none = lambda name: getattr(player, name, None)
         return player
@@ -49,7 +50,7 @@ class PracticeTests(unittest.TestCase):
             player = self.player(app)
             backend = practice.backend(player)
             for enabled in (False, True):
-                with patch('settings.TreatmentAI', enabled), patch.object(backend, 'TreatmentAI', enabled):
+                with patch('settings.TreatmentAI', enabled):
                     self.assertEqual(practice.context(player)['TreatmentAI'], enabled)
                     if not enabled:
                         result = practice.live_task(player, {'type': 'chat', 'text': 'hello'})

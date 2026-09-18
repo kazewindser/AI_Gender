@@ -8,7 +8,8 @@ import random
 import re
 import time
 from openai import OpenAI
-from settings import ShowFeedback, TreatmentAI
+from settings import ShowFeedback
+from _treatment import ai_enabled
 from _i18n import TEXT, template_context, tr
 
 
@@ -540,7 +541,7 @@ class MyPage(Page):
         ensure_task_state(player)
         return template_context(
             matrix_size=C.MATRIX_SIZE,
-            TreatmentAI=TreatmentAI,
+            TreatmentAI=ai_enabled(player),
             ShowFeedback=ShowFeedback,
             CopyButtonText=tr('copy_matrix'),
         )
@@ -555,7 +556,7 @@ class MyPage(Page):
             initial_cumulative_score=(
                 round(player.cumulative_score, 2) if ShowFeedback else None
             ),
-            initial_chat_log=load_chat_log(player) if TreatmentAI else [],
+            initial_chat_log=load_chat_log(player) if ai_enabled(player) else [],
             texts=TEXT,
         )
 

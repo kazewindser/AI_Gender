@@ -30,6 +30,7 @@ def player(app, code):
     p = cls()
     p.__dict__.update(id_in_group=1, round_number=1,
         participant=SimpleNamespace(code=code, sf_used_stock_codes=''),
+        session=SimpleNamespace(config={}),
         task_started_at=time.time(), current_question_started_at=time.time(),
         current_matrix=json.dumps([[0] * 15] * 15), current_correct_count=225,
         current_stock_code='test', current_series='[100]', current_correct_price=100,
@@ -59,7 +60,7 @@ class BackgroundChatTests(unittest.TestCase):
             with ExitStack() as stack:
                 stack.enter_context(patch('_ai_chat.request_completion', side_effect=slow_completion))
                 for backend in (cz, sf):
-                    stack.enter_context(patch.object(backend, 'TreatmentAI', True))
+                    stack.enter_context(patch('settings.TreatmentAI', True))
                     stack.enter_context(patch.object(backend.Submission, 'create'))
                 pending = []
                 for backend, live, app in cases:
@@ -102,7 +103,7 @@ class BackgroundChatTests(unittest.TestCase):
         a = player('CountingZero', 'lifecycle')
         from concurrent.futures import Future
         future = Future()
-        with patch.object(cz,'TreatmentAI',True), patch.object(_ai_chat._POOL,'submit',return_value=future) as submit:
+        with patch('settings.TreatmentAI',True), patch.object(_ai_chat._POOL,'submit',return_value=future) as submit:
             self.assertEqual(cz.live_task(a,{'type':'chat','text':'hello'})[1]['type'],'chat_pending')
             self.assertEqual(cz.live_task(a,{'type':'chat','text':'again'})[1]['type'],'chat_pending')
             self.assertEqual(cz.live_task(a,{'type':'chat_poll'})[1]['type'],'chat_pending')
@@ -112,12 +113,12 @@ class BackgroundChatTests(unittest.TestCase):
             self.assertEqual(cz.live_task(a,{'type':'chat_poll'})[1]['type'],'chat_idle')
             self.assertEqual(len(json.loads(a.chat_log)),2)
         future = Future()
-        with patch.object(cz,'TreatmentAI',True), patch.object(_ai_chat._POOL,'submit',return_value=future):
+        with patch('settings.TreatmentAI',True), patch.object(_ai_chat._POOL,'submit',return_value=future):
             cz.live_task(a,{'type':'chat','text':'hello'})
             future.set_exception(RuntimeError('simulated failure'))
             self.assertEqual(cz.live_task(a,{'type':'chat_poll'})[1]['type'],'chat_error')
         future = Future()
-        with patch.object(cz,'TreatmentAI',True), patch.object(_ai_chat._POOL,'submit',return_value=future):
+        with patch('settings.TreatmentAI',True), patch.object(_ai_chat._POOL,'submit',return_value=future):
             cz.live_task(a,{'type':'chat','text':'hello'})
             cz.MyPage.before_next_page(a,True)
             self.assertTrue(future.cancelled())

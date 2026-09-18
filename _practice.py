@@ -4,7 +4,7 @@ import random
 import time
 from types import SimpleNamespace
 
-import settings
+from _treatment import ai_enabled
 import _ai_chat
 from _i18n import LANGUAGE, TEXT, template_context, tr
 
@@ -87,7 +87,7 @@ def live_task(player, data):
         return reply(payload(player, state))
     if kind in ('chat', 'chat_poll'):
         # Reuse the main task's AI settings/protocol with temporary chat state.
-        proxy = SimpleNamespace(id_in_group=player.id_in_group,
+        proxy = SimpleNamespace(id_in_group=player.id_in_group, session=player.session,
                                 task_started_at=state['started'],
                                 ai_messages=state['ai_messages'], chat_log=state['chat_log'])
         proxy.field_maybe_none = lambda name: getattr(proxy, name, None)
@@ -118,7 +118,7 @@ def context(player):
     return template_context(practice_title=title, practice_instructions=instructions,
                             practice_complete=complete, practice_next=next_label,
                             practice_complete_hint=COMPLETE_HINT[LANGUAGE],
-                            TreatmentAI=settings.TreatmentAI, ShowFeedback=False,
+                            TreatmentAI=ai_enabled(player), ShowFeedback=False,
                             matrix_size=15,
                             CopyButtonText=tr('copy_series' if is_stock(player) else 'copy_matrix'))
 
@@ -128,7 +128,7 @@ def js_context(player):
     key = 'series' if is_stock(player) else 'matrix'
     return {f'initial_{key}': state[key], 'initial_question_number': state['question_number'],
             'show_feedback': False, 'initial_cumulative_score': None,
-            'initial_chat_log': json.loads(state['chat_log'] or '[]') if settings.TreatmentAI else [],
+            'initial_chat_log': json.loads(state['chat_log'] or '[]') if ai_enabled(player) else [],
             'texts': TEXT}
 
 

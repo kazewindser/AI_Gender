@@ -1,5 +1,6 @@
 from otree.api import *
-from settings import LANGUAGE_CODE, TreatmentAI
+from settings import LANGUAGE_CODE
+from _treatment import ai_enabled
 
 
 doc = "Treatment-specific experiment instructions embedded from Google Slides."
@@ -47,7 +48,7 @@ def get_slides_url(player):
     if len(tasks) != 1:
         raise ValueError('Instruction requires exactly one CountingZero or StockForecast task.')
     slides = C.SLIDES_EN if LANGUAGE_CODE == 'en' else C.SLIDES
-    return slides[(tasks[0], TreatmentAI)]
+    return slides[(tasks[0], ai_enabled(player))]
 
 
 class Instruction(Page):

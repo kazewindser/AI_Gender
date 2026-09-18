@@ -3,15 +3,31 @@ from os import environ
 SESSION_CONFIGS = [
     dict(
         name='counting_zero_demo',
-        display_name='Counting Zero Demo',
+        display_name='Counting Zero — No AI',
+        treatment_ai=False,
         app_sequence=['Instruction', 'Quiz', 'CountingZeroPractice', 'CountingZero', 'CRT', 'questionnaire', 'Final_Payoff'],
         num_demo_participants=4,
     ),
     dict(
         name='stock_forecast_demo',
-        display_name='Stock Forecast Demo',
+        display_name='Stock Forecast — No AI',
+        treatment_ai=False,
         app_sequence=['Instruction', 'Quiz', 'StockForecastPractice', 'StockForecast', 'CRT', 'questionnaire', 'Final_Payoff'],
         num_demo_participants=4,
+    ),
+    dict(
+        name='counting_zero_demo_ai',
+        display_name='Counting Zero — With AI',
+        app_sequence=['Instruction', 'Quiz', 'CountingZeroPractice', 'CountingZero', 'CRT', 'questionnaire', 'Final_Payoff'],
+        num_demo_participants=4,
+        treatment_ai=True,
+    ),
+    dict(
+        name='stock_forecast_demo_ai',
+        display_name='Stock Forecast — With AI',
+        app_sequence=['Instruction', 'Quiz', 'StockForecastPractice', 'StockForecast', 'CRT', 'questionnaire', 'Final_Payoff'],
+        num_demo_participants=4,
+        treatment_ai=True,
     ),
     dict(
         name='CRT',

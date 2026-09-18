@@ -8,6 +8,7 @@ import json
 import time
 
 from _i18n import tr
+from _treatment import ai_enabled
 
 _POOL = ThreadPoolExecutor(max_workers=32, thread_name_prefix='ai-chat')
 _JOBS = {}
@@ -34,7 +35,7 @@ def request_completion(client_factory, options):
 
 def handle(player, data, source, key):
     reply = lambda **value: {player.id_in_group: value}
-    if not source.TreatmentAI:
+    if not ai_enabled(player):
         return reply(type='chat_error', text=tr('ai_unavailable'))
     now = time.monotonic()
     for old_key, job in list(_JOBS.items()):
