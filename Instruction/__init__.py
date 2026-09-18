@@ -53,7 +53,11 @@ def get_slides_url(player):
 class Instruction(Page):
     @staticmethod
     def vars_for_template(player: Player):
-        return dict(slides_url=get_slides_url(player), is_english=LANGUAGE_CODE == 'en')
+        return dict(
+            slides_url=get_slides_url(player),
+            is_english=LANGUAGE_CODE == 'en',
+            show_diogo_message=player.session.is_demo and LANGUAGE_CODE == 'en',
+        )
 
 
 page_sequence = [Instruction]

@@ -91,7 +91,7 @@ ROOMS = [
 # Participant-interface language. Supported by this project:
 # 'zh-hans' = Simplified Chinese, 'en' = English, 'ja' = Japanese.
 # Restart oTree after changing this value.
-LANGUAGE_CODE = 'ja'
+LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'JPY'
