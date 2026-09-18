@@ -56,7 +56,7 @@ class Instruction(Page):
         return dict(
             slides_url=get_slides_url(player),
             is_english=LANGUAGE_CODE == 'en',
-            show_diogo_message=player.session.is_demo and LANGUAGE_CODE == 'en',
+            show_diogo_message=LANGUAGE_CODE == 'en',
         )
 
 
