@@ -8,6 +8,7 @@
     const taskElement = workspaceElement?.querySelector('.counting-zero-module');
     let isComposing = false;
     let awaitingResponse = false;
+    let pollTimer;
 
     if (!messagesElement || !inputElement || !sendButton) return;
 
@@ -70,6 +71,17 @@
 
     window.addEventListener('ai-chat-message', event => {
         const data = event.detail;
+        clearTimeout(pollTimer);
+        if (data.type === 'chat_pending') {
+            setAwaitingResponse(true);
+            pollTimer = setTimeout(() => liveSend({type: 'chat_poll'}), 500);
+            return;
+        }
+        if (data.type === 'chat_idle') {
+            if (awaitingResponse) appendMessage('error', js_vars.texts.ai_failed);
+            setAwaitingResponse(false);
+            return;
+        }
         if (data.type === 'chat_response') {
             appendMessage('ai', data.text);
         } else {
@@ -77,6 +89,9 @@
         }
         setAwaitingResponse(false);
     });
+
+    window.addEventListener('pagehide', () => clearTimeout(pollTimer));
+    document.addEventListener('DOMContentLoaded', () => liveSend({type: 'chat_poll'}));
 
     (js_vars.initial_chat_log || []).forEach(item => {
         appendMessage(item.sender === 'Participant' ? 'participant' : 'ai', item.text);

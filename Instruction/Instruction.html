@@ -2,6 +2,12 @@
             <p><center><strong>{{ if is_english }}Instructions{{ else }}説明{{ endif }}</strong></center></p>
 {{ endblock }}
 {{ block content }}
+    {{ if show_diogo_message }}
+    <div class="alert alert-info" role="note">
+        <strong>Message for Diogo:</strong> The Next button will appear after one minute.
+        (This message will not appear in the actual experiment.)
+    </div>
+    {{ endif }}
 
     <div>
         {{ if is_english }}
@@ -29,11 +35,9 @@
     </div>
 
     <script>
-        // 秒単位で指定
-        delaytime = 2;
-        window.setTimeout(show_btn, delaytime*30000);
+        window.setTimeout(show_btn, 60 * 1000);
         function show_btn(){
-            ele = document.getElementById("nextbtn");
+            const ele = document.getElementById("nextbtn");
             ele.style.display = "block";
             ele.classList.add("d-flex");
         }

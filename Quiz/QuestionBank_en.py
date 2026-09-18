@@ -1,14 +1,14 @@
 QUESTIONS = [
     {
-        'question': 'How is the total payment you receive at the end of the experiment calculated?',
+        'question': 'How is your additional payment from the three main tasks calculated?',
         'choices': [
-            [1, 'The 500-yen participation fee plus the sum of the payments from all three tasks'],
-            [2, 'The 500-yen participation fee plus the payment from one randomly selected task'],
-            [3, 'The 500-yen participation fee plus the payment from the task with the highest payment'],
+            [1, 'The sum of the payments from all three tasks'],
+            [2, 'The payment from one randomly selected task'],
+            [3, 'The payment from the task with the highest payment'],
             [4, 'The payment from Task 3 only'],
         ],
         'correct': 2,
-        'error_msg': 'Sorry, that is incorrect. After all three tasks are complete, one task is selected at random for payment. You receive the payment from that task plus the 500-yen participation fee.',
+        'error_msg': 'Sorry, that is incorrect. After all three main tasks are complete, one task is selected at random for payment. Your additional payment from the main tasks is the payment from that selected task.',
     },
     {
         'question': 'If the correct answer to a question is 100 and your answer is 90, how many points do you receive for that question?',

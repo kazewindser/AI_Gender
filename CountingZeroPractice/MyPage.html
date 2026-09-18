@@ -1,12 +1,4 @@
-{{ block title }}
-    {{ t.task_label }} {{ player.round_number }}:
-    {{ if player.round_number == 1 }}{{ t.piece_rate }}{{ endif }}
-    {{ if player.round_number == 2 }}{{ t.tournament }}{{ endif }}
-    {{ if player.round_number == 3 }}
-        {{ if player.payment_choice == 'piece_rate' }}{{ t.piece_rate }}{{ endif }}
-        {{ if player.payment_choice == 'tournament' }}{{ t.tournament }}{{ endif }}
-    {{ endif }}
-{{ endblock }}
+{{ block title }}{{ practice_title }}{{ endblock }}
 
 {{ block styles }}
     <link rel="stylesheet" href="{% static 'global/TaskWorkspace.css' %}?v=20260818-7">
