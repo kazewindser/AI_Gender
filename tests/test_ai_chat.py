@@ -2,6 +2,7 @@
 import asyncio
 from contextlib import ExitStack
 import json
+import inspect
 import threading
 import time
 from types import SimpleNamespace
@@ -13,6 +14,15 @@ import StockForecast as sf
 import _ai_chat
 import _practice
 from otree.live import call_live_method_compat
+
+
+async def dispatch(live, player, data):
+    result = call_live_method_compat(live, player, data)
+    # oTree 5 returns a dict; oTree 6 wraps replies in an async generator.
+    if inspect.isasyncgen(result):
+        replies = [reply async for reply in result]
+        return replies[-1] if replies else None
+    return result
 
 
 def player(app, code):
@@ -55,7 +65,7 @@ class BackgroundChatTests(unittest.TestCase):
                 for backend, live, app in cases:
                     a, b = player(app, app+'A'), player(app, app+'B')
                     start = time.monotonic()
-                    result = call_live_method_compat(live, a, {'type': 'chat', 'text': 'help'})
+                    result = await dispatch(live, a, {'type': 'chat', 'text': 'help'})
                     self.assertEqual(result[1]['type'], 'chat_pending')
                     self.assertLess(time.monotonic()-start, 1)
                     pending.append((live,a))
@@ -64,7 +74,7 @@ class BackgroundChatTests(unittest.TestCase):
                         b.task_started_at = time.time()-backend.C.TASK_SECONDS+2
                     start = time.monotonic()
                     answer = '225' if backend is cz else '100'
-                    result = call_live_method_compat(live, b, {'type': 'submit', 'answer': answer})
+                    result = await dispatch(live, b, {'type': 'submit', 'answer': answer})
                     latency = time.monotonic()-start
                     self.assertLess(latency, 1)
                     self.assertNotIn('time_up', result[1])
@@ -81,7 +91,7 @@ class BackgroundChatTests(unittest.TestCase):
                 while pending and time.monotonic()<deadline:
                     await asyncio.sleep(0.05)
                     for live,a in list(pending):
-                        result = call_live_method_compat(live,a,{'type':'chat_poll'})[1]
+                        result = (await dispatch(live,a,{'type':'chat_poll'}))[1]
                         if result['type']=='chat_response':
                             self.assertEqual(result['text'],'Delayed AI reply')
                             pending.remove((live,a))
