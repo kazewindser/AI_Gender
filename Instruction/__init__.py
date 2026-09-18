@@ -11,16 +11,16 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
     SLIDES = {
-        ('CountingZero', False): 'https://docs.google.com/presentation/d/e/2PACX-1vQU9isqxd0mg8oDANpI1AU_eck1p2OV7n4VpK2A7g1PZmwIS1Hw7wXKgoYmrppSZA/pubembed',
-        ('CountingZero', True): 'https://docs.google.com/presentation/d/e/2PACX-1vTOC053eecdfbCol0SLGMwa0y_vDRRIWcxuDimtnR__utFJZKZofP3t3dhGWyeHPA/pubembed',
-        ('StockForecast', False): 'https://docs.google.com/presentation/d/e/2PACX-1vTlsEKNn9MQvLFJBmTkMjPGMyJr7241AoqupYIQUtIfGAasgMa6S8VxNgAUc-qq5g/pubembed',
-        ('StockForecast', True): 'https://docs.google.com/presentation/d/e/2PACX-1vTT2Xsj3K846ob-nrOVnWKf2SPMo2Ozabzf7gJwrgy6h2WFpw6TjjLJu1AqHalzPg/pubembed',
+        ('CountingZero', False): 'https://docs.google.com/presentation/d/e/2PACX-1vSPPJxFglqp9Zamy1oyRbuLhKx-VRkH1S5sGYMp4cbJ0zHr1irt5s9w74o2082AlYK0A44xA5MhweEc/pubembed',
+        ('CountingZero', True): 'https://docs.google.com/presentation/d/e/2PACX-1vToU0SyFNDHSfEXMvikmFkJrKp5NVAH-TS_1dbDl_av5Hon0EnzpKQh7iu-QZL7_dW-MadedkA0Gh-1/pubembed',
+        ('StockForecast', False): 'https://docs.google.com/presentation/d/e/2PACX-1vSP1mFrwnIzVuEpwBUSGdZyyjWtqVuJWUYnx7Pm7oTU1JejZnVSDEscXo1J3kHns2sBvsoBSOQBLX9a/pubembed',
+        ('StockForecast', True): 'https://docs.google.com/presentation/d/e/2PACX-1vRN4F3qd7fQBcZzhKOAIzp5V9uRR087vFsMjHz8cwgFwwjc2seFG_RyDXlQyxb0_GIDf8_Hd0wIIlcL/pubembed',
     }
     SLIDES_EN = {
-        ('CountingZero', False): 'https://docs.google.com/presentation/d/e/2PACX-1vTlCFi2BxE_QQD-mttj5GgVSdQ9EwaDZfhQr7Ay6SA7JK9Z3W3g0n700usLo37FzQ/pubembed',
-        ('CountingZero', True): 'https://docs.google.com/presentation/d/e/2PACX-1vQnKgoZSwviymtW1ORzvygTNqoiDfPBxnynA7UfdUS3-UI3LkoEIdWhijzIyO6KTg/pubembed',
-        ('StockForecast', False): 'https://docs.google.com/presentation/d/e/2PACX-1vSxtcR__avoQn79YzA2CSaLzkUJhc3OCbG2p7nNkmWs2LKyEM6-opsv9TM-zp3_sg/pubembed',
-        ('StockForecast', True): 'https://docs.google.com/presentation/d/e/2PACX-1vTkl2OdcINR-laJqkFyIVgVZ3wIOqHF57-wYBwxzAGnDTYvGqgo_lntke1fPYvQzg/pubembed',
+        ('CountingZero', False): 'https://docs.google.com/presentation/d/e/2PACX-1vTAPqOKCp6iK-8xTLHHwt1waAtq77-OR81iQdmoWAVK1sQIkj1LsOV-ENAD1yfufu-P9RH10kcfoiqU/pubembed',
+        ('CountingZero', True): 'https://docs.google.com/presentation/d/e/2PACX-1vSRtGj-SYXqW6CjmIhpIeTNO4mYtPS4Cm-XbQJDtbpYPQdSmy2orxvy97HTpSKljfwHievEPIz8hNVy/pubembed',
+        ('StockForecast', False): 'https://docs.google.com/presentation/d/e/2PACX-1vT3-XZpJR9YuGUqG4S0jBbFmp1SGaerJsbTI57-Dzwao6ZduL6_pNG-GEiDEIRqjPC8LwXQbz-Yx_uq/pubembed',
+        ('StockForecast', True): 'https://docs.google.com/presentation/d/e/2PACX-1vTonPHHVyRl5w3uWZfCpgIVCAAo_n9cBRDQeMEeW-Gy5COcWwaGkmO6o1k0VyFrHzQ_G7UMgr4KrEJF/pubembed',
     }
 
 
