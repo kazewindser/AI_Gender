@@ -199,7 +199,7 @@
     });
 
     window.liveRecv = data => {
-        if (data.type === 'chat_response' || data.type === 'chat_error') {
+        if (data.type && data.type.startsWith('chat_')) {
             window.dispatchEvent(new CustomEvent('ai-chat-message', {detail: data}));
             return;
         }

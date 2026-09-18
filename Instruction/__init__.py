@@ -56,4 +56,4 @@ class Instruction(Page):
         return dict(slides_url=get_slides_url(player), is_english=LANGUAGE_CODE == 'en')
 
 
-page_sequence = [Waitplease, Instruction]
+page_sequence = [Instruction]

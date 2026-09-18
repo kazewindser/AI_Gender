@@ -1,6 +1,8 @@
 from otree.api import *
 
 import json
+import sys
+import _ai_chat
 from os import environ
 import random
 import re
@@ -349,7 +351,7 @@ def get_openai_client():
         raise RuntimeError(
             'OpenAI API key is missing. Set CHATGPT_KEY or OPENAI_API_KEY.'
         )
-    return OpenAI(api_key=api_key)
+    return OpenAI(api_key=api_key, timeout=45.0, max_retries=0)
 
 
 def load_ai_messages(player: Player):
@@ -377,53 +379,17 @@ def append_chat_log(player: Player, sender, text):
     player.chat_log = json.dumps(log, ensure_ascii=False)
 
 
-def live_ai_chat(player: Player, data):
-    if not TreatmentAI:
-        return {
-            player.id_in_group: dict(
-                type='chat_error', text=tr('ai_unavailable')
-            )
-        }
-
-    text = str(data.get('text', '')).strip()
-    if not text:
-        return {
-            player.id_in_group: dict(type='chat_error', text=tr('enter_message'))
-        }
-
-    messages = load_ai_messages(player)
-    messages.append({'role': 'user', 'content': text})
-    player.ai_messages = json.dumps(messages, ensure_ascii=False)
-    append_chat_log(player, 'Participant', text)
-
-    try:
-        completion = get_openai_client().chat.completions.create(
-            model=C.AI_MODEL,
-            messages=messages,
-            reasoning_effort=C.AI_REASONING_EFFORT,
-            temperature=C.AI_TEMPERATURE,
-        )
-        output = completion.choices[0].message.content or ''
-    except Exception as error:
-        print(f'OpenAI chat request failed: {error}')
-        return {
-            player.id_in_group: dict(
-                type='chat_error',
-                text=tr('ai_failed'),
-            )
-        }
-
-    messages.append({'role': 'assistant', 'content': output})
-    player.ai_messages = json.dumps(messages, ensure_ascii=False)
-    append_chat_log(player, 'AI', output)
-    return {
-        player.id_in_group: dict(type='chat_response', text=output)
-    }
+def live_ai_chat(player: Player, data, chat_key=None):
+    return _ai_chat.handle(player, data, sys.modules[__name__],
+                           chat_key if chat_key is not None else _ai_chat.key_for(player))
 
 
 def live_task(player: Player, data):
     ensure_task_state(player)
-    if data.get('type') == 'chat':
+    if data.get('type') in ('chat', 'chat_poll'):
+        if time.time() - player.task_started_at >= C.TASK_SECONDS:
+            _ai_chat.discard(_ai_chat.key_for(player))
+            return {player.id_in_group: dict(type='chat_error', text=tr('ai_unavailable'))}
         return live_ai_chat(player, data)
     if data.get('type') == 'load':
         return {player.id_in_group: state_payload(player)}
@@ -595,6 +561,7 @@ class MyPage(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
+        _ai_chat.discard(_ai_chat.key_for(player))
         player.round_total_score = player.cumulative_score
 
 

@@ -4,42 +4,14 @@ SESSION_CONFIGS = [
     dict(
         name='counting_zero_demo',
         display_name='Counting Zero Demo',
-        app_sequence=['Instruction', 'Quiz', 'CountingZero', 'CRT', 'questionnaire', 'Final_Payoff'],
+        app_sequence=['Instruction', 'Quiz', 'CountingZeroPractice', 'CountingZero', 'CRT', 'questionnaire', 'Final_Payoff'],
         num_demo_participants=4,
     ),
     dict(
         name='stock_forecast_demo',
         display_name='Stock Forecast Demo',
-        app_sequence=['Instruction', 'Quiz', 'StockForecast', 'CRT', 'questionnaire', 'Final_Payoff'],
+        app_sequence=['Instruction', 'Quiz', 'StockForecastPractice', 'StockForecast', 'CRT', 'questionnaire', 'Final_Payoff'],
         num_demo_participants=4,
-    ),
-    dict(
-        name='counting_zero_test_ai',
-        display_name='Counting Zero Test - AI (5 minutes)',
-        app_sequence=['CountingZeroTest'],
-        num_demo_participants=1,
-        treatment_ai=True,
-    ),
-    dict(
-        name='counting_zero_test_no_ai',
-        display_name='Counting Zero Test - No AI (5 minutes)',
-        app_sequence=['CountingZeroTest'],
-        num_demo_participants=1,
-        treatment_ai=False,
-    ),
-    dict(
-        name='stock_forecast_test_ai',
-        display_name='Stock Forecast Test - AI (5 minutes)',
-        app_sequence=['StockForecastTest'],
-        num_demo_participants=1,
-        treatment_ai=True,
-    ),
-    dict(
-        name='stock_forecast_test_no_ai',
-        display_name='Stock Forecast Test - No AI (5 minutes)',
-        app_sequence=['StockForecastTest'],
-        num_demo_participants=1,
-        treatment_ai=False,
     ),
     dict(
         name='CRT',
@@ -51,6 +23,18 @@ SESSION_CONFIGS = [
         name='questionnaire',
         display_name='Questionnaire',
         app_sequence=['questionnaire'],
+        num_demo_participants=1,
+    ),
+    dict(
+        name='CountingZeroPractice',
+        display_name='CountingZeroPractice',
+        app_sequence=['CountingZeroPractice'],
+        num_demo_participants=1,
+    ),
+    dict(
+        name='StockForecastPractice',
+        display_name='StockForecastPractice',
+        app_sequence=['StockForecastPractice'],
         num_demo_participants=1,
     )
 ]
